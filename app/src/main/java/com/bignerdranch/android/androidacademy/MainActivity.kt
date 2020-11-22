@@ -30,6 +30,11 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, practice_two::class.java)
             startActivity(intent)
         }
+
+        moovie_btn.setOnClickListener {
+            val intent = Intent(this, MovieDetailsActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
