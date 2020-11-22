@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_movie_details)
+        setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
 
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
@@ -28,6 +28,11 @@ class MainActivity : AppCompatActivity() {
 
         buttonInt2.setOnClickListener {
             val intent = Intent(this, practice_two::class.java)
+            startActivity(intent)
+        }
+
+        moovie_btn.setOnClickListener {
+            val intent = Intent(this, MovieDetailsActivity::class.java)
             startActivity(intent)
         }
     }
