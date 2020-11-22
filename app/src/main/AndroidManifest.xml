@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidAcademy">
-        <activity android:name=".practice_two"></activity>
+        <activity android:name=".MovieDetailsActivity"></activity>
+        <activity android:name=".practice_two" />
         <activity android:name=".practice_one" />
         <activity
             android:name=".MainActivity"
