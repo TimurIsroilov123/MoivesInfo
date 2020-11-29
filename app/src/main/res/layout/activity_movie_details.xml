@@ -92,60 +92,18 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/film_title" />
 
-                <ImageView
-                    android:id="@+id/ratingbar1"
+                <RatingBar
+                    android:id="@+id/ratingbar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="3dp"
-                    android:src="@drawable/star_icon_red"
-                    app:layout_constraintEnd_toStartOf="@id/ratingbar2"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/genre_txt" />
-
-                <ImageView
-                    android:id="@+id/ratingbar2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="3dp"
-                    android:src="@drawable/star_icon_red"
-                    app:layout_constraintEnd_toStartOf="@id/ratingbar3"
-                    app:layout_constraintStart_toEndOf="@id/ratingbar1"
-                    app:layout_constraintTop_toBottomOf="@+id/genre_txt" />
-
-                <ImageView
-                    android:id="@+id/ratingbar3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="3dp"
-                    android:src="@drawable/star_icon_red"
-                    app:layout_constraintEnd_toStartOf="@id/ratingbar4"
-                    app:layout_constraintStart_toEndOf="@id/ratingbar2"
-                    app:layout_constraintTop_toBottomOf="@+id/genre_txt" />
-
-                <ImageView
-                    android:id="@+id/ratingbar4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="3dp"
-                    android:src="@drawable/star_icon_red"
-                    app:layout_constraintEnd_toStartOf="@id/ratingbar5"
-                    app:layout_constraintStart_toEndOf="@id/ratingbar3"
-                    app:layout_constraintTop_toBottomOf="@+id/genre_txt" />
-
-                <ImageView
-                    android:id="@+id/ratingbar5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="3dp"
-                    android:layout_marginTop="16dp"
-                    android:src="@drawable/star_icon_gray"
-                    app:layout_constraintStart_toEndOf="@id/ratingbar4"
-                    app:layout_constraintTop_toBottomOf="@+id/genre_txt" />
+                    app:layout_constraintTop_toBottomOf="@+id/genre_txt"
+                    android:numStars="5"
+                    android:rating="4"
+                    android:theme="@style/RatingBar"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="14dp"
+                    style="?android:attr/ratingBarStyleSmall"/>
 
                 <TextView
                     android:id="@+id/num_of_view"
@@ -156,7 +114,7 @@
                     android:text="@string/num_of_views"
                     android:textColor="@color/gray"
                     android:textStyle="bold"
-                    app:layout_constraintLeft_toRightOf="@id/ratingbar5"
+                    app:layout_constraintLeft_toRightOf="@id/ratingbar"
                     app:layout_constraintTop_toBottomOf="@+id/genre_txt" />
 
                 <TextView

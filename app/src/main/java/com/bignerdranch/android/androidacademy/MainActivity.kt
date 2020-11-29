@@ -7,18 +7,20 @@ import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import kotlinx.android.synthetic.main.content_main.*
+import kotlinx.android.synthetic.main.fragment_movies_details.*
+import kotlinx.android.synthetic.main.fragment_movies_list.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnMovieItemClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 //        setSupportActionBar(findViewById(R.id.toolbar))
 
-        supportFragmentManager.beginTransaction()
-                .add(R.id.main_container, FragmentMoviesList())
-                .commit()
 
 //        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
 //            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -39,6 +41,14 @@ class MainActivity : AppCompatActivity() {
 //            val intent = Intent(this, MovieDetailsActivity::class.java)
 //            startActivity(intent)
 //        }
+
+    }
+
+    override fun onItemClick() {
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.container, FragmentMoviesDetails())
+                .addToBackStack("FragmentMoviesDetails")
+                .commit()
     }
 
 //    override fun onCreateOptionsMenu(menu: Menu): Boolean {
