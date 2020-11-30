@@ -27,4 +27,9 @@
     <string name="mark">Mark Ruffalo</string>
     <string name="chris_h">Chris Hemsworth</string>
     <string name="moovie">Moovie!!!</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="movies_list">Movies list</string>
+    <string name="avengers_end_game">Avengers: End Game</string>
+    <string name="movie_duration">137 MIN</string>
 </resources>
