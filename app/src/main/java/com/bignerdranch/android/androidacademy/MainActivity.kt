@@ -18,10 +18,6 @@ class MainActivity : AppCompatActivity(), OnMovieItemClickListener {
     }
 
     override fun onItemClickShowList() {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.container, FragmentMoviesList())
-            .addToBackStack("FragmentMoviesList")
-            .commit()
+        supportFragmentManager.popBackStack()
     }
-
 }
