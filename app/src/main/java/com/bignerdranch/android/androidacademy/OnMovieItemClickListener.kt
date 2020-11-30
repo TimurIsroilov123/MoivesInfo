@@ -1,5 +1,6 @@
 package com.bignerdranch.android.androidacademy
 
 interface OnMovieItemClickListener {
-     fun onItemClick()
+     fun onItemClickShowDetail()
+     fun onItemClickShowList()
 }
