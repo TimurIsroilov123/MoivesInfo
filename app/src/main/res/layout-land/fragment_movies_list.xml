@@ -7,7 +7,7 @@
     android:background="@color/background">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:layout_gravity="center_horizontal"
         app:layout_anchorGravity="center_horizontal">
@@ -31,9 +31,10 @@
             android:id="@+id/rv_movie"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="horizontal"
             tools:context=".MainActivity"
-            app:spanCount="2"
+            tools:spanCount="2"
             android:foregroundGravity="center"
             tools:listitem="@layout/view_holder_movie"
             app:layout_constraintTop_toBottomOf="@id/tv_movie_list"
