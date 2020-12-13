@@ -31,7 +31,6 @@ class FragmentMoviesList: Fragment(R.layout.fragment_movies_list), OnItemClickLi
 
         val rvMovie = view.findViewById<RecyclerView>(R.id.rv_movie)
 
-       // rvMovie.layoutManager = GridLayoutManager( context, 2)
         val myAdapter = MovieAdapter(this, MoviesDataSource().getMovies())
         rvMovie.adapter = myAdapter
 
