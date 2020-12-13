@@ -43,7 +43,7 @@ class FragmentMoviesList: Fragment(R.layout.fragment_movies_list), OnItemClickLi
     }
 
     override fun onItemClick(movie: Movie) {
-        listener!!.onItemClickShowDetail()
+        listener?.onItemClickShowDetail()
     }
 
 }

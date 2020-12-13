@@ -20,12 +20,12 @@
             android:textColor="@color/white"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:drawableLeft="@drawable/target"
             app:layout_constraintTop_toTopOf="parent"
             android:drawablePadding="10dp"
             android:layout_marginTop="40dp"
             android:layout_marginStart="16dp"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:drawableStartCompat="@drawable/target" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_movie"

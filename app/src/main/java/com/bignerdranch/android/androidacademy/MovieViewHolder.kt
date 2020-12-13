@@ -11,14 +11,14 @@ class  MovieViewHolder(
         private val listener: OnItemClickListener
         ): RecyclerView.ViewHolder(view) {
 
-    private val img: ImageView? = view.findViewById(R.id.iv_movie)
-    private val title: TextView? = view.findViewById(R.id.movie_title)
-    private val age: TextView? = view.findViewById(R.id.tv_age)
-    private val like: ImageView? = view.findViewById(R.id.iv_like)
-    private val genres: TextView? = view.findViewById(R.id.tv_genre)
-    private val ratingBar: RatingBar? = view.findViewById(R.id.ratingbar)
-    private val views: TextView? = view.findViewById(R.id.tv_views)
-    private val duration: TextView? = view.findViewById(R.id.tv_duration)
+    private val img: ImageView = view.findViewById(R.id.iv_movie)
+    private val title: TextView = view.findViewById(R.id.movie_title)
+    private val age: TextView = view.findViewById(R.id.tv_age)
+    private val like: ImageView = view.findViewById(R.id.iv_like)
+    private val genres: TextView = view.findViewById(R.id.tv_genre)
+    private val ratingBar: RatingBar = view.findViewById(R.id.ratingbar)
+    private val views: TextView = view.findViewById(R.id.tv_views)
+    private val duration: TextView = view.findViewById(R.id.tv_duration)
 
     private var movie: Movie? = null
 

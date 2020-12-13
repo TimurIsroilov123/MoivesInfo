@@ -10,8 +10,8 @@ class ActorViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     private val name = itemView.findViewById<TextView>(R.id.tv_name)
 
     fun onBind(actor: Actor){
-        avatar!!.setImageResource(actor.img)
-        name!!.text = actor.name
+        avatar.setImageResource(actor.img)
+        name.text = actor.name
     }
 
 }
