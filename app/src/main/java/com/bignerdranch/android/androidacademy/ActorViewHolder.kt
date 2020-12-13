@@ -11,7 +11,6 @@ class ActorViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
     fun onBind(actor: Actor){
         avatar.setImageResource(actor.img)
-        name.text = actor.name
+        name.setText(actor.name)
     }
-
 }
