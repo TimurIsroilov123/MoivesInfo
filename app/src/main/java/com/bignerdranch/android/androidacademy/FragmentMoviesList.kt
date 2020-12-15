@@ -24,8 +24,7 @@ class FragmentMoviesList: Fragment(R.layout.fragment_movies_list), OnItemClickLi
         super.onDetach()
         listener = null
     }
-
-
+    
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

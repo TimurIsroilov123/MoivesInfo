@@ -30,16 +30,16 @@ class  MovieViewHolder(
 
     fun onBind(movie: Movie){
         this.movie = movie
-        img!!.setImageResource(movie.img)
-        title!!.text = movie.title
-        age!!.text = movie.age
+        img.setImageResource(movie.img)
+        title.text = movie.title
+        age.text = movie.age
         if (movie.isLiked)
-            like!!.setImageResource(R.drawable.liked)
+            like.setImageResource(R.drawable.liked)
         else
-            like!!.setImageResource(R.drawable.like)
-        genres!!.text = movie.genres
-        ratingBar!!.rating = movie.rate.toFloat()
-        views!!.text = movie.reviews.toString()
-        duration!!.text = movie.duration.toString()
+            like.setImageResource(R.drawable.like)
+        genres.text = movie.genres
+        ratingBar.rating = movie.rate.toFloat()
+        views.text = movie.reviews.toString()
+        duration.text = movie.duration.toString()
     }
 }
