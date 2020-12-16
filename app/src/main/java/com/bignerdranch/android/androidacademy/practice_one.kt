@@ -38,6 +38,7 @@ class practice_one : AppCompatActivity() {
                 buttonImg.text = "Show him"
             }
         }
+
         switch1.setOnClickListener{
             if(!isBlack) {
                 layout.setBackgroundColor(Color.BLACK)
