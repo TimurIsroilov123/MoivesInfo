@@ -1,10 +1,18 @@
 package com.bignerdranch.android.androidacademy
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.view.View
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.async
+import java.security.AccessController.getContext
+
 
 class  MovieViewHolder(
         view: View,
@@ -22,24 +30,26 @@ class  MovieViewHolder(
 
     private var movie: Movie? = null
 
-    init{
+    init {
         itemView.setOnClickListener {
              listener.onItemClick(movie!!)
         }
     }
 
+    @SuppressLint("SetTextI18n")
     fun onBind(movie: Movie){
         this.movie = movie
-        img.setImageResource(movie.img)
         title.text = movie.title
-        age.text = movie.age
-        if (movie.isLiked)
-            like.setImageResource(R.drawable.liked)
-        else
-            like.setImageResource(R.drawable.like)
-        genres.text = movie.genres
-        ratingBar.rating = movie.rate.toFloat()
-        views.text = movie.reviews.toString()
-        duration.text = movie.duration.toString()
+        img.maxHeight = 240
+        Glide.with(img.context)
+                .load(movie.poster)
+                .centerCrop()
+                .into(img)
+        age.text = movie.minimumAge.toString() + "+"
+        genres.text = movie.genres.joinToString{ it.name }
+        like.setImageResource(R.drawable.like)
+        ratingBar.rating = movie.ratings/2
+        duration.text = movie.runtime.toString()
+        views.text = movie.numberOfRatings.toString()
     }
 }

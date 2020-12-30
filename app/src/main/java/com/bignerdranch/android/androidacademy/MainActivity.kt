@@ -2,8 +2,8 @@ package com.bignerdranch.android.androidacademy
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
-import com.bignerdranch.android.androidacademy.MoviesDataSource
+import androidx.core.view.OneShotPreDrawListener.add
+import androidx.fragment.app.commit
 
 class MainActivity : AppCompatActivity(), OnMovieItemClickListener {
 
@@ -11,12 +11,15 @@ class MainActivity : AppCompatActivity(), OnMovieItemClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
     }
 
-    override fun onItemClickShowDetail() {
+    override fun onItemClickShowDetail(movie: Movie) {
+        val fragmentMoviesList = FragmentMoviesDetails()
+        val bundle = Bundle()
+        bundle.putParcelable("currentMovie", movie)
+        fragmentMoviesList.arguments = bundle
         supportFragmentManager.beginTransaction()
-            .replace(R.id.container, FragmentMoviesDetails())
+            .replace(R.id.container, fragmentMoviesList)
             .addToBackStack("FragmentMoviesDetails")
             .commit()
     }

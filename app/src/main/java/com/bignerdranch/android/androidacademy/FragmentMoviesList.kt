@@ -8,15 +8,27 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import kotlinx.coroutines.*
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.Dispatchers.IO
 
-class FragmentMoviesList: Fragment(R.layout.fragment_movies_list), OnItemClickListener {
+class FragmentMoviesList:
+        Fragment(R.layout.fragment_movies_list),
+        OnItemClickListener {
 
     var listener: OnMovieItemClickListener? = null
+    lateinit var movie: List<Movie>
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnMovieItemClickListener){
             listener = context
+        }
+        runBlocking {
+            launch {
+                movie = loadMovies(context)
+            }
+
         }
     }
 
@@ -24,26 +36,19 @@ class FragmentMoviesList: Fragment(R.layout.fragment_movies_list), OnItemClickLi
         super.onDetach()
         listener = null
     }
-    
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val rvMovie = view.findViewById<RecyclerView>(R.id.rv_movie)
 
-        val myAdapter = MovieAdapter(this, MoviesDataSource().getMovies())
+        val myAdapter = MovieAdapter(this, movie)
         rvMovie.adapter = myAdapter
-
-        view.findViewById<ViewGroup>(R.id.rv_movie)
-                .setOnClickListener {
-                    listener?.onItemClickShowDetail()
-                }
-
     }
 
     override fun onItemClick(movie: Movie) {
-        listener?.onItemClickShowDetail()
+        listener?.onItemClickShowDetail(movie)
     }
-
 }
 
 
