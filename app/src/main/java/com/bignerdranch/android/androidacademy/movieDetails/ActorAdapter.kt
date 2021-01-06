@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
 class ActorAdapter(
-        private val contentData: List<Actor>):
+        private val contentData: List<Actor>) :
         RecyclerView.Adapter<ActorViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):
