@@ -5,30 +5,34 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RestrictTo
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.liveData
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.bignerdranch.android.androidacademy.movieList.MovieListViewModel
+import com.bignerdranch.android.androidacademy.movieList.MovieListViewModelFactory
+import com.bignerdranch.android.androidacademy.util.ResProvider
 import kotlinx.coroutines.*
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.Dispatchers.IO
 
 class FragmentMoviesList:
         Fragment(R.layout.fragment_movies_list),
         OnItemClickListener {
 
-    var listener: OnMovieItemClickListener? = null
-    lateinit var movie: List<Movie>
+    private var listener: OnMovieItemClickListener? = null
+    private var movie = mutableListOf<Movie>()
+
+    private val viewModel by viewModels<MovieListViewModel> {
+        MovieListViewModelFactory(ResProvider( requireActivity()))
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+
         if (context is OnMovieItemClickListener){
             listener = context
-        }
-        runBlocking {
-            launch {
-                movie = loadMovies(context)
-            }
-
         }
     }
 
@@ -42,13 +46,20 @@ class FragmentMoviesList:
 
         val rvMovie = view.findViewById<RecyclerView>(R.id.rv_movie)
 
-        val myAdapter = MovieAdapter(this, movie)
-        rvMovie.adapter = myAdapter
+        viewModel.updateMovie()
+
+        viewModel.movieListliveData.observe(this.viewLifecycleOwner, Observer {
+            movie = it
+            val myAdapter = MovieAdapter(this, movie)
+            rvMovie.adapter = myAdapter
+        })
+
     }
 
     override fun onItemClick(movie: Movie) {
         listener?.onItemClickShowDetail(movie)
     }
+
 }
 
 

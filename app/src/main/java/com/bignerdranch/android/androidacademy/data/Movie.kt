@@ -2,6 +2,8 @@ package com.bignerdranch.android.androidacademy
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Serializer
 
 @Parcelize
 data class Movie(

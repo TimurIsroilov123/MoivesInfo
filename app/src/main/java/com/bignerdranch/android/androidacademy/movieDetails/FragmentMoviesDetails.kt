@@ -5,7 +5,10 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
+import com.bignerdranch.android.androidacademy.movieDetails.MovieDeatailsViewModel
+import com.bignerdranch.android.androidacademy.movieDetails.MovieDeatailsViewModelFactory
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_movies_details.*
 
@@ -13,6 +16,10 @@ import kotlinx.android.synthetic.main.fragment_movies_details.*
 class FragmentMoviesDetails():
         Fragment(R.layout.fragment_movies_details) {
     var listener: OnMovieItemClickListener? = null
+
+    private val viewModel by viewModels<MovieDeatailsViewModel> {
+        MovieDeatailsViewModelFactory(this.arguments?.getParcelable<Movie>("currentMovie"))
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -28,36 +35,30 @@ class FragmentMoviesDetails():
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.movieDatailsLiveData.observe(this.viewLifecycleOwner, this::setValues)
+
+        viewModel.getPostal()
+
         view.findViewById<TextView>(R.id.back_btn)
-            .setOnClickListener {
-                listener?.onItemClickShowList()
-            }
-        val movie = this.arguments?.getParcelable<Movie>("currentMovie")
+                .setOnClickListener {
+                    listener?.onItemClickShowList()
+                }
 
-        //Setting data
-        film_title.text = movie?.title
-        Glide.with(this)
-                .load(movie?.backdrop)
-                .centerCrop()
-                .into(iv_backdrop)
+    }
 
+    private fun setValues(movie: Movie) {
         tv_age.text = movie?.minimumAge.toString() + "+"
         genre_txt.text = movie?.genres?.joinToString { it.name }
         num_of_view.text = movie?.numberOfRatings.toString()
         description_view.text = movie?.overview
 
-        val rvActor = view.findViewById<RecyclerView>(R.id.rv_actor)
+        val rvActor = view?.findViewById<RecyclerView>(R.id.rv_actor)
         val adapter = ActorAdapter(movie.let { it!!.actors })
-        rvActor.adapter = adapter
-
-        //How can I hide cast(TextView) if there are no actors?
-//        if(movie?.actors == null)
-//            cast.visibility = View.INVISIBLE
-
-        try {
-            movie?.actors
-        }catch (e: IllegalArgumentException){
-            cast.visibility = View.INVISIBLE
-        }
+        rvActor?.adapter = adapter
+        film_title.text = movie?.title
+        Glide.with(this)
+                .load(movie?.backdrop)
+                .centerCrop()
+                .into(iv_backdrop)
     }
 }
