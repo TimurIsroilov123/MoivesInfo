@@ -34,7 +34,6 @@ class FragmentMoviesDetails() :
                 .setOnClickListener {
                     listener?.onItemClickShowList()
                 }
-
     }
 
     private fun setValues(movie: Movie?) {
