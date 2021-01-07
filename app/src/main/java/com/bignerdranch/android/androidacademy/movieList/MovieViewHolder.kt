@@ -1,23 +1,18 @@
 package com.bignerdranch.android.androidacademy
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.view.View
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.async
-import java.security.AccessController.getContext
 
 
-class  MovieViewHolder(
+class MovieViewHolder(
         view: View,
         private val listener: OnItemClickListener
-        ): RecyclerView.ViewHolder(view) {
+) : RecyclerView.ViewHolder(view) {
 
     private val img: ImageView = view.findViewById(R.id.iv_movie)
     private val title: TextView = view.findViewById(R.id.movie_title)
@@ -32,12 +27,12 @@ class  MovieViewHolder(
 
     init {
         itemView.setOnClickListener {
-             listener.onItemClick(movie!!)
+            listener.onItemClick(movie!!)
         }
     }
 
     @SuppressLint("SetTextI18n")
-    fun onBind(movie: Movie){
+    fun onBind(movie: Movie) {
         this.movie = movie
         title.text = movie.title
         img.maxHeight = 240
@@ -46,9 +41,9 @@ class  MovieViewHolder(
                 .centerCrop()
                 .into(img)
         age.text = movie.minimumAge.toString() + "+"
-        genres.text = movie.genres.joinToString{ it.name }
+        genres.text = movie.genres.joinToString { it.name }
         like.setImageResource(R.drawable.like)
-        ratingBar.rating = movie.ratings/2
+        ratingBar.rating = movie.ratings / 2
         duration.text = movie.runtime.toString()
         views.text = movie.numberOfRatings.toString()
     }

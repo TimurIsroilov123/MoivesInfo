@@ -4,32 +4,30 @@ import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
-import androidx.lifecycle.lifecycleScope
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.*
-import kotlinx.coroutines.Dispatchers.IO
+import com.bignerdranch.android.androidacademy.movieList.MovieListViewModel
+import com.bignerdranch.android.androidacademy.movieList.MovieListViewModelFactory
+import com.bignerdranch.android.androidacademy.util.ResProvider
 
 class FragmentMoviesList :
         Fragment(R.layout.fragment_movies_list),
         OnItemClickListener {
 
     private var listener: OnMovieItemClickListener? = null
-    private val myAdapter: MovieAdapter by lazy { MovieAdapter(this) }
+    private var movie = mutableListOf<Movie>()
 
+    private val viewModel by viewModels<MovieListViewModel> {
+        MovieListViewModelFactory(ResProvider(requireActivity()))
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+
         if (context is OnMovieItemClickListener) {
             listener = context
         }
-
-        viewLifecycleOwner
-                .lifecycleScope
-                .launch(IO) {
-                    val movieList = loadMovies(context)
-                    myAdapter.update(movieList)
-                }
-
     }
 
     override fun onDetach() {
@@ -42,12 +40,17 @@ class FragmentMoviesList :
 
         val rvMovie = view.findViewById<RecyclerView>(R.id.rv_movie)
 
-        rvMovie.adapter = myAdapter
+        viewModel.movieListLiveData.observe(this.viewLifecycleOwner, Observer {
+            movie = it
+            val myAdapter = MovieAdapter(this, movie)
+            rvMovie.adapter = myAdapter
+        })
     }
 
     override fun onItemClick(movie: Movie) {
         listener?.onItemClickShowDetail(movie)
     }
+
 }
 
 
