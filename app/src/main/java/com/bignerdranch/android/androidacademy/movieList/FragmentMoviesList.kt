@@ -40,8 +40,7 @@ class FragmentMoviesList :
 
         val rvMovie = view.findViewById<RecyclerView>(R.id.rv_movie)
 
-
-        viewModel.movieListliveData.observe(this.viewLifecycleOwner, Observer {
+        viewModel.movieListLiveData.observe(this.viewLifecycleOwner, Observer {
             movie = it
             val myAdapter = MovieAdapter(this, movie)
             rvMovie.adapter = myAdapter
