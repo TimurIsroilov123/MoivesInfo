@@ -15,7 +15,7 @@ class MovieAdapter(
             MovieViewHolder {
         val view: View = LayoutInflater
                 .from(parent.context)
-                .inflate(R.layout.view_holder_movie, parent, false)
+                .inflate(R.layout.view_holder_movie, parent,false)
         return MovieViewHolder(view, listener)
     }
 
