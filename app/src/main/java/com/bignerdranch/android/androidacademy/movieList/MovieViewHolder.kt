@@ -6,6 +6,7 @@ import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bignerdranch.android.androidacademy.data.Movie
 import com.bumptech.glide.Glide
 
 
@@ -34,17 +35,12 @@ class MovieViewHolder(
     @SuppressLint("SetTextI18n")
     fun onBind(movie: Movie) {
         this.movie = movie
-        title.text = movie.title
+        title.text = movie.originalTitle
         img.maxHeight = 240
-        Glide.with(img.context)
-                .load(movie.poster)
-                .centerCrop()
-                .into(img)
-        age.text = movie.minimumAge.toString() + "+"
-        genres.text = movie.genres.joinToString { it.name }
-        like.setImageResource(R.drawable.like)
-        ratingBar.rating = movie.ratings / 2
-        duration.text = movie.runtime.toString()
-        views.text = movie.numberOfRatings.toString()
+//        age.text = movie.minimumAge.toString() + "+"
+//        like.setImageResource(R.drawable.like)
+//        ratingBar.rating = movie.ratings / 2
+//        duration.text = movie.runtime.toString()
+//        views.text = movie.numberOfRatings.toString()
     }
 }

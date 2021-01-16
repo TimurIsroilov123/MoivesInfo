@@ -1,13 +1,12 @@
 package com.bignerdranch.android.androidacademy.util
 
 import android.content.Context
-import com.bignerdranch.android.androidacademy.Movie
-import com.bignerdranch.android.androidacademy.loadMovies
+import com.bignerdranch.android.androidacademy.data.Movie
+import com.bignerdranch.android.androidacademy.data.MoviesLoad
 
 class ResProvider(val context: Context): IResProvider{
 
-    override suspend fun getLoadedMovies(): MutableList<Movie> {
-        return loadMovies(context).toMutableList()
+    override suspend fun getLoadedMovies(): List<Movie> {
+        return MoviesLoad().loadMovies()
     }
-
 }

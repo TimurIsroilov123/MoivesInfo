@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
+import com.bignerdranch.android.androidacademy.data.Movie
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_movies_details.*
 
@@ -28,7 +28,7 @@ class FragmentMoviesDetails() :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setValues(this.arguments?.getParcelable<Movie>("currentMovie"))
+        setValues(this.arguments?.getParcelable("currentMovie"))
 
         view.findViewById<TextView>(R.id.back_btn)
                 .setOnClickListener {
@@ -37,18 +37,18 @@ class FragmentMoviesDetails() :
     }
 
     private fun setValues(movie: Movie?) {
-        tv_age.text = movie?.minimumAge.toString() + "+"
-        genre_txt.text = movie?.genres?.joinToString { it.name }
-        num_of_view.text = movie?.numberOfRatings.toString()
+//        tv_age.text = movie?.minimumAge.toString() + "+"
+//        genre_txt.text = movie?.genres?.joinToString { it.name }
+//        num_of_view.text = movie?.numberOfRatings.toString()
         description_view.text = movie?.overview
 
-        val rvActor = view?.findViewById<RecyclerView>(R.id.rv_actor)
-        val adapter = ActorAdapter(movie.let { it!!.actors })
-        rvActor?.adapter = adapter
+//        val rvActor = view?.findViewById<RecyclerView>(R.id.rv_actor)
+//        val adapter = ActorAdapter(movie.let { it!!.actors })
+//        rvActor?.adapter = adapter
         film_title.text = movie?.title
-        Glide.with(this)
-                .load(movie?.backdrop)
-                .centerCrop()
-                .into(iv_backdrop)
+//        Glide.with(this)
+//                .load(movie?.backdrop)
+//                .centerCrop()
+//                .into(iv_backdrop)
     }
 }

@@ -1,7 +1,7 @@
 package com.bignerdranch.android.androidacademy.util
 
-import com.bignerdranch.android.androidacademy.Movie
+import com.bignerdranch.android.androidacademy.data.Movie
 
 interface IResProvider {
-    suspend fun getLoadedMovies(): MutableList<Movie>
+    suspend fun getLoadedMovies(): List<Movie>
 }
