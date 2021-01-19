@@ -2,31 +2,23 @@ package com.bignerdranch.android.androidacademy
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.android.androidacademy.data.Movie
+import com.bignerdranch.android.androidacademy.data.Page
 import com.bignerdranch.android.androidacademy.movieList.MovieListViewModel
 import com.bignerdranch.android.androidacademy.movieList.MovieListViewModelFactory
 import com.bignerdranch.android.androidacademy.util.ResProvider
-import com.bumptech.glide.load.HttpException
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.isActive
-import kotlinx.serialization.SerializationException
-import java.io.IOException
 
 class FragmentMoviesList :
         Fragment(R.layout.fragment_movies_list),
         OnItemClickListener {
 
     private var listener: OnMovieItemClickListener? = null
-    private var moviesList = listOf<Movie>()
+    private lateinit var moviesList: List<Movie>
 //    private var moviesList = BaseResponse<Movie>()
 
     private val viewModel by viewModels<MovieListViewModel> {
@@ -53,7 +45,7 @@ class FragmentMoviesList :
         val rvMovie = view.findViewById<RecyclerView>(R.id.rv_movie)
 
         viewModel.movieListLiveData.observe(this.viewLifecycleOwner, Observer {
-            moviesList = it
+            moviesList = it.results
             val myAdapter = MovieAdapter(this, moviesList)
             rvMovie.adapter = myAdapter
         })

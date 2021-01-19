@@ -46,9 +46,9 @@ class FragmentMoviesDetails() :
 //        val adapter = ActorAdapter(movie.let { it!!.actors })
 //        rvActor?.adapter = adapter
         film_title.text = movie?.title
-//        Glide.with(this)
-//                .load(movie?.backdrop)
-//                .centerCrop()
-//                .into(iv_backdrop)
+        Glide.with(this)
+                .load(BASE_IMG_URL + movie?.backdropPath)
+                .centerCrop()
+                .into(iv_backdrop)
     }
 }
