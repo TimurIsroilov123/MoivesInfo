@@ -20,10 +20,9 @@ class FragmentMoviesList :
         OnItemClickListener {
 
     private var listener: OnMovieItemClickListener? = null
-    private lateinit var moviesList: List<Movie>
-    private lateinit var combined: Combined
+    private var moviesList: List<Movie>? = null
 
-    lateinit var moviesDetails: List<MovieDetails>
+    private var moviesDetails: List<MovieDetails>? = null
 //    private var moviesList = BaseResponse<Movie>()
 
     private val viewModel by viewModels<MovieListViewModel> {
@@ -51,8 +50,6 @@ class FragmentMoviesList :
 
         viewModel.movieListLiveData.observe(this.viewLifecycleOwner, Observer {
             moviesList = it.results
-//            val myAdapter = MovieAdapter(this, moviesList)
-//            rvMovie.adapter = myAdapter
         })
 
         viewModel.loadDetails()
@@ -61,7 +58,7 @@ class FragmentMoviesList :
             moviesDetails = it
         })
 
-        val myAdapter = MovieAdapter(this, Combined(moviesList, moviesDetails))
+        val myAdapter = MovieAdapter(this, Combined(moviesList?: listOf(), moviesDetails?: listOf()))
         rvMovie.adapter = myAdapter
     }
 

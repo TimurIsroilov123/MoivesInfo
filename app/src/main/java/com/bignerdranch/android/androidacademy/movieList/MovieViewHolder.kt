@@ -57,7 +57,7 @@ class MovieViewHolder(
             genres.text = genreIDS.toString()
         }
 
-        genres.text = details.genres
+        genres.text = details.genres.joinToString { it.name }
     }
 }
 
