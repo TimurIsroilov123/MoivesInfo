@@ -7,7 +7,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
+import com.bignerdranch.android.androidacademy.data.Combined
 import com.bignerdranch.android.androidacademy.data.Movie
+import com.bignerdranch.android.androidacademy.data.MovieDetails
 import com.bignerdranch.android.androidacademy.data.Page
 import com.bignerdranch.android.androidacademy.movieList.MovieListViewModel
 import com.bignerdranch.android.androidacademy.movieList.MovieListViewModelFactory
@@ -19,6 +21,9 @@ class FragmentMoviesList :
 
     private var listener: OnMovieItemClickListener? = null
     private lateinit var moviesList: List<Movie>
+    private lateinit var combined: Combined
+
+    lateinit var moviesDetails: List<MovieDetails>
 //    private var moviesList = BaseResponse<Movie>()
 
     private val viewModel by viewModels<MovieListViewModel> {
@@ -46,9 +51,18 @@ class FragmentMoviesList :
 
         viewModel.movieListLiveData.observe(this.viewLifecycleOwner, Observer {
             moviesList = it.results
-            val myAdapter = MovieAdapter(this, moviesList)
-            rvMovie.adapter = myAdapter
+//            val myAdapter = MovieAdapter(this, moviesList)
+//            rvMovie.adapter = myAdapter
         })
+
+        viewModel.loadDetails()
+
+        viewModel.detailsLiveData.observe(this.viewLifecycleOwner, Observer {
+            moviesDetails = it
+        })
+
+        val myAdapter = MovieAdapter(this, Combined(moviesList, moviesDetails))
+        rvMovie.adapter = myAdapter
     }
 
     override fun onItemClick(movie: Movie) {

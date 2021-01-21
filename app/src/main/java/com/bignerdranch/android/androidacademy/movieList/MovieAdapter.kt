@@ -4,12 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bignerdranch.android.androidacademy.data.Combined
 import com.bignerdranch.android.androidacademy.data.Movie
 
 
 class MovieAdapter(
         private val listener: OnItemClickListener,
-        private val contentData: List<Movie>
+        private val contentData: Combined
 ) : RecyclerView.Adapter<MovieViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):
@@ -21,10 +22,10 @@ class MovieAdapter(
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        val movie = contentData[position]
-        holder.onBind(movie)
+//        val movie = contentData[position]
+        holder.onBind(contentData.movie[position], contentData.details[position])
     }
 
-    override fun getItemCount(): Int = contentData.size
+    override fun getItemCount(): Int = contentData.movie.size
 }
 

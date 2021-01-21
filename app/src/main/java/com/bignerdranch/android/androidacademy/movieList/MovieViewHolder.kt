@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.android.androidacademy.data.BASE_URL
 import com.bignerdranch.android.androidacademy.data.Movie
+import com.bignerdranch.android.androidacademy.data.MovieDetails
 import com.bumptech.glide.Glide
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
@@ -40,7 +41,7 @@ class MovieViewHolder(
     }
 
     @SuppressLint("SetTextI18n")
-    fun onBind(movie: Movie) {
+    fun onBind(movie: Movie, details: MovieDetails) {
         this.movie = movie
         movie.apply {
             tvTitle.text = title
@@ -55,6 +56,8 @@ class MovieViewHolder(
             views.text = voteCount.toString()
             genres.text = genreIDS.toString()
         }
+
+        genres.text = details.genres
     }
 }
 

@@ -6,17 +6,31 @@ import retrofit2.Retrofit
 import retrofit2.http.GET
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import retrofit2.create
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 class MoviesLoad {
-    suspend fun loadMovies(): Page{
+    suspend fun loadMovies(): Page {
         return RetrofitModule.moviesApi.getMovies()
+    }
+
+    suspend fun loadDetails(id: Long): MovieDetails {
+        return RetrofitModule.moviesApi.getMovieDetails(id)
     }
 }
 
 private interface MoviesApi {
-    @GET("3/movie/popular?language=en-US&page=1&append_to_response=credits&append_to_response=credits")
+    @GET("3/movie/popular?language=en-US&page=1")
     suspend fun getMovies(@Query("api_key") key: String = apiKey): Page
+//
+//    @GET("3/movies/details&append_to_response=person")
+//    suspend fun getMoviesDetails(@Query("api_key") key: String = apiKey): MovieDetails
+
+    @GET("movie/{movie_id}")
+    suspend fun getMovieDetails(
+        @Path("movie_id") movieId: Long,
+        @Query("api_key") key: String = apiKey
+    ): MovieDetails
 }
 
 private object RetrofitModule {
