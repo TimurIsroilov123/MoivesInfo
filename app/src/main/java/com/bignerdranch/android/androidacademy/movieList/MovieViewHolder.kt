@@ -41,7 +41,7 @@ class MovieViewHolder(
     }
 
     @SuppressLint("SetTextI18n")
-    fun onBind(movie: Movie, details: MovieDetails) {
+    fun onBind(movie: Movie) {
         this.movie = movie
         movie.apply {
             tvTitle.text = title
@@ -51,13 +51,12 @@ class MovieViewHolder(
                 .centerCrop()
                 .placeholder(R.drawable.movie)
                 .into(img)
-            age.text = if (adult) "16+" else "13+"
+            age.text = if (adult) "18+" else "12+"
             ratingBar.rating = (voteAverage/2.0).toFloat()
             views.text = voteCount.toString()
-            genres.text = genreIDS.toString()
+            genres.text = movie.detail?.genres?.joinToString { it.name }
+            duration.text = detail?.runtime.toString()
         }
-
-        genres.text = details.genres.joinToString { it.name }
     }
 }
 

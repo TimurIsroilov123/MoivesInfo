@@ -7,34 +7,27 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
-import com.bignerdranch.android.androidacademy.data.Combined
 import com.bignerdranch.android.androidacademy.data.Movie
-import com.bignerdranch.android.androidacademy.data.MovieDetails
-import com.bignerdranch.android.androidacademy.data.Page
 import com.bignerdranch.android.androidacademy.movieList.MovieListViewModel
 import com.bignerdranch.android.androidacademy.movieList.MovieListViewModelFactory
 import com.bignerdranch.android.androidacademy.util.ResProvider
 
 class FragmentMoviesList :
-        Fragment(R.layout.fragment_movies_list),
-        OnItemClickListener {
+    Fragment(R.layout.fragment_movies_list),
+    OnItemClickListener {
 
     private var listener: OnMovieItemClickListener? = null
-    private var moviesList: List<Movie>? = null
-
-    private var moviesDetails: List<MovieDetails>? = null
-//    private var moviesList = BaseResponse<Movie>()
+    private val movieAdapter: MovieAdapter by lazy { MovieAdapter(this) }
 
     private val viewModel by viewModels<MovieListViewModel> {
-        MovieListViewModelFactory(ResProvider(requireActivity()))
+        MovieListViewModelFactory(ResProvider())
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        if (context is OnMovieItemClickListener) {
+        if (context is OnMovieItemClickListener)
             listener = context
-        }
 
     }
 
@@ -49,27 +42,14 @@ class FragmentMoviesList :
         val rvMovie = view.findViewById<RecyclerView>(R.id.rv_movie)
 
         viewModel.movieListLiveData.observe(this.viewLifecycleOwner, Observer {
-            moviesList = it.results
+            movieAdapter.update(it)
         })
 
-        viewModel.loadDetails()
-
-        viewModel.detailsLiveData.observe(this.viewLifecycleOwner, Observer {
-            moviesDetails = it
-        })
-
-        val myAdapter = MovieAdapter(this, Combined(moviesList?: listOf(), moviesDetails?: listOf()))
-        rvMovie.adapter = myAdapter
+        rvMovie.adapter = movieAdapter
     }
 
     override fun onItemClick(movie: Movie) {
         listener?.onItemClickShowDetail(movie)
     }
-
 }
-
-
-
-
-
 

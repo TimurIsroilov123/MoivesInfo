@@ -11,13 +11,10 @@ import kotlinx.coroutines.launch
 class MovieListViewModel(
     private val resProvider: IResProvider
 ) : ViewModel() {
-    private val _movieListLiveData = MutableLiveData<Page>()
-    val movieListLiveData: LiveData<Page>
-        get() = _movieListLiveData
 
-    private val _detailsLiveData = MutableLiveData<List<MovieDetails>>()
-    val detailsLiveData: LiveData<List<MovieDetails>>
-        get() = _detailsLiveData
+    private val _movieListLiveData = MutableLiveData<List<Movie>>()
+    val movieListLiveData: LiveData<List<Movie>>
+        get() = _movieListLiveData
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
@@ -25,9 +22,4 @@ class MovieListViewModel(
         }
     }
 
-    fun loadDetails() {
-        viewModelScope.launch(Dispatchers.IO) {
-            _detailsLiveData.postValue(resProvider.getDetails(movieListLiveData.value!!.results))
-        }
-    }
 }

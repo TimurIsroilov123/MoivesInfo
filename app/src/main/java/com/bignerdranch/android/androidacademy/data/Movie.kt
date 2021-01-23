@@ -1,14 +1,9 @@
 package com.bignerdranch.android.androidacademy.data
 
 import android.os.Parcelable
+import com.bignerdranch.android.androidacademy.FragmentMoviesDetails
 import kotlinx.android.parcel.Parcelize
 import kotlinx.serialization.*
-
-
-data class Combined(
-    val movie: List<Movie>,
-    val details: List<MovieDetails>,
-)
 
 @Serializable
 @Parcelize
@@ -46,7 +41,10 @@ data class Movie(
     val video: Boolean,
 
     @SerialName("vote_average")
-    val voteAverage: Double
+    val voteAverage: Double,
+
+    var detail: MovieDetails? = null
+
 ) : Parcelable
 
 

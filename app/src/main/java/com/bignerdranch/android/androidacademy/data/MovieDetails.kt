@@ -5,49 +5,14 @@ import kotlinx.android.parcel.Parcelize
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-
 @Serializable
 @Parcelize
-data class Actor (
-    val birthday: String,
-
-    @SerialName("known_for_department")
-    val knownForDepartment: String,
-
-    val deathday: String? = null,
-    val id: Long,
-    val name: String,
-
-    @SerialName("also_known_as")
-    val alsoKnownAs: List<String>,
-
-    val gender: Long,
-    val biography: String,
-    val popularity: Double,
-
-    @SerialName("place_of_birth")
-    val placeOfBirth: String,
-
-    @SerialName("profile_path")
-    val profilePath: String,
-
-    val adult: Boolean,
-
-    @SerialName("imdb_id")
-    val imdbID: String,
-
-    val homepage: String? = null
-) : Parcelable
-
-@Serializable
 data class MovieDetails (
     val adult: Boolean,
 
     @SerialName("backdrop_path")
     val backdropPath: String,
 
-    @SerialName("belongs_to_collection")
-    val belongsToCollection: Boolean? = null,
 
     val budget: Long,
     val genres: List<Genre>,
@@ -94,16 +59,18 @@ data class MovieDetails (
 
     @SerialName("vote_count")
     val voteCount: Long
-)
+): Parcelable
 
 @Serializable
+@Parcelize
 data class Genre (
     val id: Long,
     val name: String
-)
+): Parcelable
 
 
 @Serializable
+@Parcelize
 data class ProductionCompany (
     val id: Long,
 
@@ -114,20 +81,22 @@ data class ProductionCompany (
 
     @SerialName("origin_country")
     val originCountry: String
-)
+): Parcelable
 
 @Serializable
+@Parcelize
 data class ProductionCountry (
     @SerialName("iso_3166_1")
     val iso3166_1: String,
 
     val name: String
-)
+) : Parcelable
 
 @Serializable
+@Parcelize
 data class SpokenLanguage (
     @SerialName("iso_639_1")
     val iso639_1: String,
 
     val name: String
-)
+): Parcelable

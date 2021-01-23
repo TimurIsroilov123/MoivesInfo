@@ -5,14 +5,24 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.bignerdranch.android.androidacademy.data.Movie
+import com.bignerdranch.android.androidacademy.movieDetails.MovieDetailsViewModel
+import com.bignerdranch.android.androidacademy.movieDetails.MovieDetailsViewModelFactory
+import com.bignerdranch.android.androidacademy.util.ResProvider
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_movies_details.*
 
 
 class FragmentMoviesDetails() :
-        Fragment(R.layout.fragment_movies_details) {
-    var listener: OnMovieItemClickListener? = null
+    Fragment(R.layout.fragment_movies_details) {
+    private var listener: OnMovieItemClickListener? = null
+    private val actorAdapter: ActorAdapter by lazy { ActorAdapter() }
+
+    private val viewModel by viewModels<MovieDetailsViewModel> {
+        MovieDetailsViewModelFactory(ResProvider())
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -30,25 +40,34 @@ class FragmentMoviesDetails() :
 
         setValues(this.arguments?.getParcelable("currentMovie"))
 
+        showActors(this.arguments?.getParcelable("currentMovie"))
+
         view.findViewById<TextView>(R.id.back_btn)
-                .setOnClickListener {
-                    listener?.onItemClickShowList()
-                }
+            .setOnClickListener {
+                listener?.onItemClickShowList()
+            }
     }
 
     private fun setValues(movie: Movie?) {
-//        tv_age.text = movie?.minimumAge.toString() + "+"
-//        genre_txt.text = movie?.genres?.joinToString { it.name }
-//        num_of_view.text = movie?.numberOfRatings.toString()
-        description_view.text = movie?.overview
-
-//        val rvActor = view?.findViewById<RecyclerView>(R.id.rv_actor)
-//        val adapter = ActorAdapter(movie.let { it!!.actors })
-//        rvActor?.adapter = adapter
-        film_title.text = movie?.title
-        Glide.with(this)
-                .load(BASE_IMG_URL + movie?.backdropPath)
+        movie?.apply {
+            genre_txt.text = detail?.genres?.joinToString { it.name }
+            description_view.text = overview
+            film_title.text = title
+            Glide.with(iv_backdrop.context)
+                .load(BASE_IMG_URL + backdropPath)
                 .centerCrop()
                 .into(iv_backdrop)
+            tv_age.text = if (adult) "18+" else "12+"
+        }
+    }
+
+    private fun showActors(movie: Movie?) {
+
+        viewModel.loadActors(movie!!.id)
+        viewModel.actorsLiveData.observe(this.viewLifecycleOwner, Observer {
+            actorAdapter.updateActors(it)
+        })
+
+        rv_actor.adapter = actorAdapter
     }
 }
