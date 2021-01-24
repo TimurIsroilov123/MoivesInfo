@@ -40,8 +40,6 @@ class FragmentMoviesDetails() :
 
         setValues(this.arguments?.getParcelable("currentMovie"))
 
-        showActors(this.arguments?.getParcelable("currentMovie"))
-
         view.findViewById<TextView>(R.id.back_btn)
             .setOnClickListener {
                 listener?.onItemClickShowList()
@@ -59,10 +57,6 @@ class FragmentMoviesDetails() :
                 .into(iv_backdrop)
             tv_age.text = if (adult) "18+" else "12+"
         }
-    }
-
-    private fun showActors(movie: Movie?) {
-
         viewModel.loadActors(movie!!.id)
         viewModel.actorsLiveData.observe(this.viewLifecycleOwner, Observer {
             actorAdapter.updateActors(it)
@@ -70,4 +64,5 @@ class FragmentMoviesDetails() :
 
         rv_actor.adapter = actorAdapter
     }
+
 }

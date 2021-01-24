@@ -13,8 +13,9 @@ class ActorViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun onBind(actor: Cast) {
         Glide.with(avatar.context)
-                .load(BASE_IMG_URL + actor.profilePath)
-                .into(avatar)
+            .load(BASE_IMG_URL + actor.profilePath)
+            .centerCrop()
+            .into(avatar)
         name.text = actor.name
     }
 }
