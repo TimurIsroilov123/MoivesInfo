@@ -2,6 +2,7 @@ package com.bignerdranch.android.androidacademy
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.bignerdranch.android.androidacademy.data.Movie
 
 class MainActivity : AppCompatActivity(), OnMovieItemClickListener {
 
