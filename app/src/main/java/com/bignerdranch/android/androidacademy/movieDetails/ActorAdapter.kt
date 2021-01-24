@@ -25,8 +25,9 @@ class ActorAdapter() :
     }
 
     fun updateActors(actors: List<Cast>) {
+        contentData.clear()
         contentData.addAll(actors)
-        notifyItemRangeInserted(0, actors.size)
+        notifyItemRangeInserted(0, getItemCount())
     }
 
     override fun getItemCount(): Int = contentData.size

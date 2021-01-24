@@ -14,6 +14,5 @@ class RetrofitModule {
         .baseUrl(BASE_URL)
         .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
         .build()
-
     val moviesApi: MoviesApi = retrofit.create()
 }
