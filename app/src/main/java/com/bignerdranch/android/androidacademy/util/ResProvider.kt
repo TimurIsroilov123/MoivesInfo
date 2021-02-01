@@ -1,9 +1,10 @@
 package com.bignerdranch.android.androidacademy.util
 
+import android.content.Context
 import com.bignerdranch.android.androidacademy.data.*
 
-class ResProvider: IResProvider {
-    private val moviesRep = MoviesRep()
+class ResProvider(context: Context): IResProvider {
+    private val moviesRep = MoviesRep(context)
 
     override suspend fun getLoadedMovies(): List<Movie> {
         val movies = moviesRep.loadMovies().results
@@ -18,6 +19,7 @@ class ResProvider: IResProvider {
     override suspend fun getLoadedActors(id: Long): List<Cast> {
         return moviesRep.loadActors(id).cast
     }
+
 
 
 }

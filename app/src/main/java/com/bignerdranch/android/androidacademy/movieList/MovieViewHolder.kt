@@ -54,10 +54,10 @@ class MovieViewHolder(
             age.text = if (adult) "18+" else "12+"
             ratingBar.rating = (voteAverage/2.0).toFloat()
             views.text = voteCount.toString()
-            genres.text = movie.detail?.genres?.joinToString { it.name }
+            genres.text = detail?.genres?.joinToString { it.name }
             duration.text = detail?.runtime.toString()
         }
     }
 }
 
-const val BASE_IMG_URL = "https://image.tmdb.org/t/p/w780/"
+const val BASE_IMG_URL = "https://image.tmdb.org/t/p/w500/"

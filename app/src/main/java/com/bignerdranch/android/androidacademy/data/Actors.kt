@@ -16,15 +16,15 @@ data class Credit(
 
 @Serializable
 data class Cast(
-    val adult: Boolean,
-    val gender: Long,
+    val adult: Boolean? = null,
+    val gender: Long? = null,
     val id: Long,
     val name: String,
 
     @SerialName("original_name")
-    val originalName: String,
+    val originalName: String? = null,
 
-    val popularity: Double,
+    val popularity: Double? = null,
 
     @SerialName("profile_path")
     val profilePath: String? = null,
@@ -35,7 +35,7 @@ data class Cast(
     val character: String? = null,
 
     @SerialName("credit_id")
-    val creditID: String,
+    val creditID: String? = null,
 
     val order: Long? = null,
     val job: String? = null

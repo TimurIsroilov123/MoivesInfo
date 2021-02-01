@@ -27,9 +27,8 @@ class MovieAdapter(
 
     fun update(movies: List<Movie>) {
         contentData.addAll(movies)
-        notifyItemRangeInserted(0, itemCount)
+        notifyItemRangeInserted(0, movies.size)
     }
-
 
     override fun getItemCount(): Int = contentData.size
 }

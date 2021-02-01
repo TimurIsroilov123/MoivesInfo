@@ -8,12 +8,12 @@ import com.bignerdranch.android.androidacademy.data.MovieDetails
 
 @Entity(
     tableName = "movies",
-    indices = [Index("_id")]
+    indices = [Index("id")]
 )
 class MovieEntity(
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "_id")
-    val _id: Long = 0,
+    @PrimaryKey
+    @ColumnInfo(name = "id")
+    val id: Long,
 
     @ColumnInfo(name = "posterPath")
     val posterPath: String,
@@ -21,22 +21,16 @@ class MovieEntity(
     @ColumnInfo(name = "adult")
     val adult: Boolean,
 
-    @ColumnInfo(name = "overvie")
+    @ColumnInfo(name = "overview")
     val overview: String,
 
-    @ColumnInfo(name = "genreIDS")
-    val genreIDS: List<Long>,
-
-    @ColumnInfo(name = "id")
-    val id: Long,
-
-    @ColumnInfo(name = "posterPath")
+    @ColumnInfo(name = "title")
     val title: String,
 
     @ColumnInfo(name = "backdropPath")
     val backdropPath: String?,
 
-    @ColumnInfo(name = "posterPath")
+    @ColumnInfo(name = "popularity")
     val popularity: Double,
 
     @ColumnInfo(name = "voteCount")
@@ -45,6 +39,9 @@ class MovieEntity(
     @ColumnInfo(name = "voteAverage")
     val voteAverage: Double,
 
-    @ColumnInfo(name = "detail")
-    var detail: MovieDetails? = null
+    @ColumnInfo(name = "runtime")
+    val runtime: Long,
+
+    @ColumnInfo(name = "genres")
+    val genres: String
 )
