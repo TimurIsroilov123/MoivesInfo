@@ -19,8 +19,8 @@ import kotlin.coroutines.coroutineContext
 
 
 class MovieViewHolder(
-        view: View,
-        private val listener: OnItemClickListener
+    view: View,
+    private val listener: OnItemClickListener
 ) : RecyclerView.ViewHolder(view) {
 
     private val img: ImageView = view.findViewById(R.id.iv_movie)
@@ -52,12 +52,13 @@ class MovieViewHolder(
                 .placeholder(R.drawable.movie)
                 .into(img)
             age.text = if (adult) "18+" else "12+"
-            ratingBar.rating = (voteAverage/2.0).toFloat()
+            ratingBar.rating = (voteAverage / 2.0).toFloat()
             views.text = voteCount.toString()
             genres.text = detail?.genres?.joinToString { it.name }
             duration.text = detail?.runtime.toString()
         }
     }
 }
+
 
 const val BASE_IMG_URL = "https://image.tmdb.org/t/p/w500/"
