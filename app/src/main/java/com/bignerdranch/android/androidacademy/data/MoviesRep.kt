@@ -1,9 +1,8 @@
 package com.bignerdranch.android.androidacademy.data
 
 import android.content.Context
+import com.bignerdranch.android.androidacademy.AndroidAcademy.Companion.moviesDb
 import com.bignerdranch.android.androidacademy.room.ActorEntity
-import com.bignerdranch.android.androidacademy.room.ActorsDataBase
-import com.bignerdranch.android.androidacademy.room.MovieDataBase
 import com.bignerdranch.android.androidacademy.room.MovieEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -11,10 +10,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-class MoviesRep(context: Context) {
-
-    private val moviesDb = MovieDataBase.create(context)
-    private val actorsDb = ActorsDataBase.create(context)
+class MoviesRep : MoviesRepository {
 
     suspend fun loadMovies(): Page {
         return RetrofitModule().moviesApi.getMovies()
@@ -28,39 +24,30 @@ class MoviesRep(context: Context) {
         return RetrofitModule().moviesApi.getActors(id)
     }
 
-    suspend fun getAllMovies(): List<Movie> = withContext(Dispatchers.IO) {
+    override suspend fun getAllMovies(): List<Movie> = withContext(Dispatchers.IO) {
         moviesDb.movieDao.getAll().map { toMovie(it) }
     }
 
-    suspend fun addNewAndGetUpdated(movie: Movie): List<Movie> = withContext(Dispatchers.IO) {
-        moviesDb.movieDao.insert(toMovieEntity(movie))
-        getAllMovies()
-    }
-
-    suspend fun deleteById(id: Long): List<Movie> = withContext(Dispatchers.IO) {
-        moviesDb.movieDao.deleteById(id)
-        getAllMovies()
-    }
-
-    suspend fun deleteAllMoviesAndSetNew(movies: List<Movie>) = withContext(Dispatchers.IO) {
-        moviesDb.movieDao.deleteAll()
-        for (movie in movies) {
-            moviesDb.movieDao.insert(toMovieEntity(movie))
+    override suspend fun deleteAllMoviesAndSetNew(movies: List<Movie>) =
+        withContext(Dispatchers.IO) {
+            moviesDb.movieDao.deleteAll()
+            for (movie in movies) {
+                moviesDb.movieDao.insert(toMovieEntity(movie))
+            }
         }
+
+    override suspend fun getAllActors(): List<Cast> = withContext(Dispatchers.IO) {
+        moviesDb.actorsDAO.getAll().map { toCast(it) }
     }
 
-    suspend fun getAllActors(): List<Cast> = withContext(Dispatchers.IO) {
-        actorsDb.actorsDAO.getAll().map { toCast(it) }
-    }
-
-    suspend fun deleteAllActorsAndSetNew(casts: List<Cast>) = withContext(Dispatchers.IO) {
-        actorsDb.actorsDAO.deleteAll()
+    override suspend fun deleteAllActorsAndSetNew(casts: List<Cast>) = withContext(Dispatchers.IO) {
+        moviesDb.actorsDAO.deleteAll()
         for (actor in casts)
-            actorsDb.actorsDAO.insert(toActorEntity(actor))
+            moviesDb.actorsDAO.insert(toActorEntity(actor))
     }
 
 
-    private fun toMovie(entity: MovieEntity) = Movie(
+    override fun toMovie(entity: MovieEntity) = Movie(
         id = entity.id,
         adult = entity.adult,
         backdropPath = entity.backdropPath,
@@ -81,7 +68,7 @@ class MoviesRep(context: Context) {
         )
     )
 
-    private fun toMovieEntity(movie: Movie) = MovieEntity(
+    override fun toMovieEntity(movie: Movie) = MovieEntity(
         posterPath = movie.posterPath!!,
         adult = movie.adult,
         overview = movie.overview,
@@ -95,13 +82,13 @@ class MoviesRep(context: Context) {
         runtime = movie.detail!!.runtime,
     )
 
-    private fun toActorEntity(cast: Cast) = ActorEntity(
+    override fun toActorEntity(cast: Cast) = ActorEntity(
         id = cast.id,
         name = cast.name,
         profilePath = cast.profilePath ?: ""
     )
 
-    private fun toCast(entity: ActorEntity) = Cast(
+    override fun toCast(entity: ActorEntity) = Cast(
         id = entity.id,
         name = entity.name,
         profilePath = entity.profilePath

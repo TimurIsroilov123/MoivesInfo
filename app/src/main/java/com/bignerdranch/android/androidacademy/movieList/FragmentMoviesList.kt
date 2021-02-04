@@ -22,11 +22,9 @@ class FragmentMoviesList :
     private var listener: OnMovieItemClickListener? = null
     private val movieAdapter: MovieAdapter by lazy { MovieAdapter(this) }
 
-    private val moviesRep: MoviesRep by lazy { MoviesRep(requireContext()) }
-    private val dbMovies: MutableList<Movie> = mutableListOf()
 
     private val viewModel by viewModels<MovieListViewModel> {
-        MovieListViewModelFactory(ResProvider(requireContext()))
+        MovieListViewModelFactory(ResProvider())
     }
 
     override fun onAttach(context: Context) {
@@ -48,7 +46,7 @@ class FragmentMoviesList :
 
         val rvMovie = view.findViewById<RecyclerView>(R.id.rv_movie)
 
-        viewModel.loadFromDb(requireContext())
+        viewModel.loadFromDb()
 
         viewModel.movieListLiveData.observe(this.viewLifecycleOwner, Observer {
             movieAdapter.update(it)

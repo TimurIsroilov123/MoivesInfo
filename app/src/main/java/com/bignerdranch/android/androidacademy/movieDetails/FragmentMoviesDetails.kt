@@ -21,7 +21,7 @@ class FragmentMoviesDetails() :
     private val actorAdapter: ActorAdapter by lazy { ActorAdapter() }
 
     private val viewModel by viewModels<MovieDetailsViewModel> {
-        MovieDetailsViewModelFactory(ResProvider(requireContext()))
+        MovieDetailsViewModelFactory(ResProvider())
     }
 
     override fun onAttach(context: Context) {
@@ -57,7 +57,7 @@ class FragmentMoviesDetails() :
                 .into(iv_backdrop)
             tv_age.text = if (adult) "18+" else "12+"
         }
-        viewModel.loadActors(movie!!.id, requireContext())
+        viewModel.loadActors(movie!!.id)
         viewModel.actorsLiveData.observe(this.viewLifecycleOwner, Observer {
             actorAdapter.updateActors(it)
         })
