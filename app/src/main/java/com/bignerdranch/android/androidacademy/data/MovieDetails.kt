@@ -8,57 +8,57 @@ import kotlinx.serialization.Serializable
 @Serializable
 @Parcelize
 data class MovieDetails (
-    val adult: Boolean,
+    val adult: Boolean = true ,
 
     @SerialName("backdrop_path")
-    val backdropPath: String,
+    val backdropPath: String? = null,
 
 
-    val budget: Long,
+    val budget: Long = 1_000_000,
     val genres: List<Genre>,
-    val homepage: String,
-    val id: Long,
+    val homepage: String = "unknown",
+    val id: Long = 0,
 
     @SerialName("imdb_id")
-    val imdbID: String,
+    val imdbID: String = "not estimated",
 
     @SerialName("original_language")
-    val originalLanguage: String,
+    val originalLanguage: String = "English",
 
     @SerialName("original_title")
-    val originalTitle: String,
+    val originalTitle: String = "unknown",
 
-    val overview: String,
-    val popularity: Double,
+    val overview: String = "not viewed yet",
+    val popularity: Double = 0.0,
 
     @SerialName("poster_path")
     val posterPath: String? = null,
 
     @SerialName("production_companies")
-    val productionCompanies: List<ProductionCompany>,
+    val productionCompanies: List<ProductionCompany>? = null,
 
     @SerialName("production_countries")
-    val productionCountries: List<ProductionCountry>,
+    val productionCountries: List<ProductionCountry>? = null,
 
     @SerialName("release_date")
-    val releaseDate: String,
+    val releaseDate: String? = "unknown",
 
-    val revenue: Long,
+    val revenue: Long = 1_000_000,
     val runtime: Long,
 
     @SerialName("spoken_languages")
-    val spokenLanguages: List<SpokenLanguage>,
+    val spokenLanguages: List<SpokenLanguage>? = null,
 
-    val status: String,
-    val tagline: String,
-    val title: String,
-    val video: Boolean,
+    val status: String = "published",
+    val tagline: String? = null,
+    val title: String = "unknown",
+    val video: Boolean = false,
 
     @SerialName("vote_average")
-    val voteAverage: Double,
+    val voteAverage: Double = 0.0,
 
     @SerialName("vote_count")
-    val voteCount: Long
+    val voteCount: Long = 0
 ): Parcelable
 
 @Serializable

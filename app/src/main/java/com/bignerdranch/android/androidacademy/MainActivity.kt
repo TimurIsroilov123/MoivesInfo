@@ -1,5 +1,6 @@
 package com.bignerdranch.android.androidacademy
 
+import android.app.Application
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.bignerdranch.android.androidacademy.data.Movie
