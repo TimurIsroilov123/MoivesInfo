@@ -8,28 +8,28 @@ import kotlinx.serialization.Serializable
 @Serializable
 @Parcelize
 data class MovieDetails (
-    val adult: Boolean? = null,
+    val adult: Boolean = true ,
 
     @SerialName("backdrop_path")
     val backdropPath: String? = null,
 
 
-    val budget: Long? = null,
+    val budget: Long = 1_000_000,
     val genres: List<Genre>,
-    val homepage: String? = null,
-    val id: Long? = null,
+    val homepage: String = "unknown",
+    val id: Long = 0,
 
     @SerialName("imdb_id")
-    val imdbID: String? = null,
+    val imdbID: String = "not estimated",
 
     @SerialName("original_language")
-    val originalLanguage: String? = null,
+    val originalLanguage: String = "English",
 
     @SerialName("original_title")
-    val originalTitle: String? = null,
+    val originalTitle: String = "unknown",
 
-    val overview: String? = null,
-    val popularity: Double? = null,
+    val overview: String = "not viewed yet",
+    val popularity: Double = 0.0,
 
     @SerialName("poster_path")
     val posterPath: String? = null,
@@ -41,24 +41,24 @@ data class MovieDetails (
     val productionCountries: List<ProductionCountry>? = null,
 
     @SerialName("release_date")
-    val releaseDate: String? = null,
+    val releaseDate: String? = "unknown",
 
-    val revenue: Long? = null,
+    val revenue: Long = 1_000_000,
     val runtime: Long,
 
     @SerialName("spoken_languages")
     val spokenLanguages: List<SpokenLanguage>? = null,
 
-    val status: String? = null,
+    val status: String = "published",
     val tagline: String? = null,
-    val title: String? = null,
-    val video: Boolean? = null,
+    val title: String = "unknown",
+    val video: Boolean = false,
 
     @SerialName("vote_average")
-    val voteAverage: Double? = null,
+    val voteAverage: Double = 0.0,
 
     @SerialName("vote_count")
-    val voteCount: Long? = null
+    val voteCount: Long = 0
 ): Parcelable
 
 @Serializable
