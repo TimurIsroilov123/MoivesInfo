@@ -10,7 +10,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-class MoviesRep : MoviesRepository {
+class MoviesRep {
 
     suspend fun loadMovies(): Page {
         return RetrofitModule().moviesApi.getMovies()
@@ -24,74 +24,74 @@ class MoviesRep : MoviesRepository {
         return RetrofitModule().moviesApi.getActors(id)
     }
 
-    override suspend fun getAllMovies(): List<Movie> = withContext(Dispatchers.IO) {
-        moviesDb.movieDao.getAll().map { toMovie(it) }
+    suspend fun getAllMovies(): List<Movie> = withContext(Dispatchers.IO) {
+        moviesDb.movieDao.getAll().map { it.toMovie() }
     }
 
-    override suspend fun deleteAllMoviesAndSetNew(movies: List<Movie>) =
+    suspend fun deleteAllMoviesAndSetNew(movies: List<Movie>) =
         withContext(Dispatchers.IO) {
             moviesDb.movieDao.deleteAll()
             for (movie in movies) {
-                moviesDb.movieDao.insert(toMovieEntity(movie))
+                moviesDb.movieDao.insert(movie.toMovieEntity())
             }
         }
 
-    override suspend fun getAllActors(): List<Cast> = withContext(Dispatchers.IO) {
-        moviesDb.actorsDAO.getAll().map { toCast(it) }
+    suspend fun getAllActors(): List<Cast> = withContext(Dispatchers.IO) {
+        moviesDb.actorsDAO.getAll().map { it.toCast() }
     }
 
-    override suspend fun deleteAllActorsAndSetNew(casts: List<Cast>) = withContext(Dispatchers.IO) {
+    suspend fun deleteAllActorsAndSetNew(casts: List<Cast>) = withContext(Dispatchers.IO) {
         moviesDb.actorsDAO.deleteAll()
         for (actor in casts)
-            moviesDb.actorsDAO.insert(toActorEntity(actor))
+            moviesDb.actorsDAO.insert(actor.toActorEntity())
     }
 
 
-    override fun toMovie(entity: MovieEntity) = Movie(
-        id = entity.id,
-        adult = entity.adult,
-        backdropPath = entity.backdropPath,
+    private fun MovieEntity.toMovie() = Movie(
+        id = this.id,
+        adult = this.adult,
+        backdropPath = this.backdropPath,
         genreIDS = listOf(),
-        overview = entity.overview,
-        title = entity.title,
-        popularity = entity.popularity,
-        voteCount = entity.voteCount,
-        voteAverage = entity.voteAverage,
-        posterPath = entity.posterPath,
+        overview = this.overview,
+        title = this.title,
+        popularity = this.popularity,
+        voteCount = this.voteCount,
+        voteAverage = this.voteAverage,
+        posterPath = this.posterPath,
         releaseDate = "",
         originalTitle = "",
         originalLanguage = "",
         video = false,
         detail = MovieDetails(
-            runtime = entity.runtime,
-            genres = entity.genres.split(", ").map { Genre(id = 1, name = it) }
+            runtime = this.runtime,
+            genres = this.genres.split(", ").map { Genre(id = 1, name = it) }
         )
     )
 
-    override fun toMovieEntity(movie: Movie) = MovieEntity(
-        posterPath = movie.posterPath!!,
-        adult = movie.adult,
-        overview = movie.overview,
-        genres = movie.detail!!.genres.joinToString { it.name },
-        id = movie.id,
-        title = movie.title,
-        backdropPath = movie.backdropPath,
-        popularity = movie.popularity,
-        voteCount = movie.voteCount,
-        voteAverage = movie.voteAverage,
-        runtime = movie.detail!!.runtime,
+    private fun Movie.toMovieEntity() = MovieEntity(
+        posterPath = this.posterPath!!,
+        adult = this.adult,
+        overview = this.overview,
+        genres = this.detail!!.genres.joinToString { it.name },
+        id = this.id,
+        title = this.title,
+        backdropPath = this.backdropPath,
+        popularity = this.popularity,
+        voteCount = this.voteCount,
+        voteAverage = this.voteAverage,
+        runtime = this.detail!!.runtime,
     )
 
-    override fun toActorEntity(cast: Cast) = ActorEntity(
-        id = cast.id,
-        name = cast.name,
-        profilePath = cast.profilePath ?: ""
+    private fun Cast.toActorEntity() = ActorEntity(
+        id = this.id,
+        name = this.name,
+        profilePath = this.profilePath ?: ""
     )
 
-    override fun toCast(entity: ActorEntity) = Cast(
-        id = entity.id,
-        name = entity.name,
-        profilePath = entity.profilePath
+    private fun ActorEntity.toCast() = Cast(
+        id = this.id,
+        name = this.name,
+        profilePath = this.profilePath
     )
 
 }
