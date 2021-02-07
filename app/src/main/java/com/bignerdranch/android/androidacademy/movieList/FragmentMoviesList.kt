@@ -43,7 +43,7 @@ class FragmentMoviesList :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+requireContext()
         val rvMovie = view.findViewById<RecyclerView>(R.id.rv_movie)
 
         viewModel.loadFromDb()

@@ -1,13 +1,14 @@
 package com.bignerdranch.android.androidacademy
 
 import android.app.Application
+import androidx.work.Configuration
 import androidx.work.WorkManager
 import com.bignerdranch.android.androidacademy.data.MovieWorker
 import com.bignerdranch.android.androidacademy.data.MoviesRep
 import com.bignerdranch.android.androidacademy.data.WorkRepository
 import com.bignerdranch.android.androidacademy.room.MovieDataBase
 
-class AndroidAcademy: Application() {
+class AndroidAcademy : Application(), Configuration.Provider {
     private val workRepository = WorkRepository()
 
     override fun onCreate() {
@@ -23,4 +24,9 @@ class AndroidAcademy: Application() {
 
         lateinit var moviesDb: MovieDataBase
     }
+
+    override fun getWorkManagerConfiguration() =
+        Configuration.Builder()
+            .setMinimumLoggingLevel(android.util.Log.DEBUG)
+            .build()
 }
