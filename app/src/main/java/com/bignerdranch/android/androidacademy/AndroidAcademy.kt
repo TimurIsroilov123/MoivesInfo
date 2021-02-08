@@ -8,7 +8,7 @@ import com.bignerdranch.android.androidacademy.data.MoviesRep
 import com.bignerdranch.android.androidacademy.data.WorkRepository
 import com.bignerdranch.android.androidacademy.room.MovieDataBase
 
-class AndroidAcademy : Application(), Configuration.Provider {
+class AndroidAcademy : Application() {
     private val workRepository = WorkRepository()
 
     override fun onCreate() {
@@ -20,13 +20,9 @@ class AndroidAcademy : Application(), Configuration.Provider {
     }
 
     companion object {
-        val moviesRep = MoviesRep()
+//        val moviesRep = MoviesRep()
 
         lateinit var moviesDb: MovieDataBase
     }
 
-    override fun getWorkManagerConfiguration() =
-        Configuration.Builder()
-            .setMinimumLoggingLevel(android.util.Log.DEBUG)
-            .build()
 }

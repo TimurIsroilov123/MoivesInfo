@@ -6,14 +6,11 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.android.androidacademy.data.Movie
-import com.bignerdranch.android.androidacademy.data.MoviesRep
 import com.bignerdranch.android.androidacademy.movieList.MovieListViewModel
 import com.bignerdranch.android.androidacademy.movieList.MovieListViewModelFactory
 import com.bignerdranch.android.androidacademy.util.ResProvider
-import kotlinx.coroutines.launch
 
 class FragmentMoviesList :
     Fragment(R.layout.fragment_movies_list),

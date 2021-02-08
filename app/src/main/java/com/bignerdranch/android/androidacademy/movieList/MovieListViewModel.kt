@@ -1,8 +1,6 @@
 package com.bignerdranch.android.androidacademy.movieList
 
-import android.content.Context
 import androidx.lifecycle.*
-import com.bignerdranch.android.androidacademy.AndroidAcademy.Companion.moviesRep
 import com.bignerdranch.android.androidacademy.data.Movie
 import com.bignerdranch.android.androidacademy.data.MoviesRep
 import com.bignerdranch.android.androidacademy.util.IResProvider
@@ -19,14 +17,14 @@ class MovieListViewModel(
 
     fun loadFromDb() {
         viewModelScope.launch(Dispatchers.IO) {
-            val dbMovies = moviesRep.getAllMovies()
+            val dbMovies = MoviesRep.getAllMovies()
             if (dbMovies.isNotEmpty()) {
                 _movieListLiveData.postValue(dbMovies)
             }
 
             val loadedMovies = resProvider.getLoadedMovies()
             _movieListLiveData.postValue(loadedMovies)
-            moviesRep.deleteAllMoviesAndSetNew(loadedMovies)
+            MoviesRep.deleteAllMoviesAndSetNew(loadedMovies)
 
         }
     }

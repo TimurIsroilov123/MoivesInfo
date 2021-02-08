@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bignerdranch.android.androidacademy.AndroidAcademy.Companion.moviesRep
 import com.bignerdranch.android.androidacademy.data.Cast
+import com.bignerdranch.android.androidacademy.data.MoviesRep
 import com.bignerdranch.android.androidacademy.util.IResProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,13 +19,13 @@ class MovieDetailsViewModel(
 
     fun loadActors(id: Long) {
         viewModelScope.launch(Dispatchers.IO) {
-            val actors = moviesRep.getAllActors()
+            val actors = MoviesRep.getAllActors()
             if (actors.isNotEmpty())
                 _actorsLiveData.postValue(actors)
 
             val loadedCast = resProvider.getLoadedActors(id)
             _actorsLiveData.postValue(loadedCast)
-            moviesRep.deleteAllActorsAndSetNew(loadedCast)
+            MoviesRep.deleteAllActorsAndSetNew(loadedCast)
         }
     }
 }

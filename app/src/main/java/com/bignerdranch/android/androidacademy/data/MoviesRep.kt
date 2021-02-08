@@ -1,6 +1,5 @@
 package com.bignerdranch.android.androidacademy.data
 
-import android.content.Context
 import com.bignerdranch.android.androidacademy.AndroidAcademy.Companion.moviesDb
 import com.bignerdranch.android.androidacademy.room.ActorEntity
 import com.bignerdranch.android.androidacademy.room.MovieEntity
@@ -10,7 +9,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-class MoviesRep {
+object MoviesRep {
 
     suspend fun loadMovies(): Page {
         return RetrofitModule().moviesApi.getMovies()
