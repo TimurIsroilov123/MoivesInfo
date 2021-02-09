@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.android.androidacademy.data.Movie
+import com.bignerdranch.android.androidacademy.data.MoviesRep.toMovie
 import com.bignerdranch.android.androidacademy.movieList.MovieListViewModel
 import com.bignerdranch.android.androidacademy.movieList.MovieListViewModelFactory
 import com.bignerdranch.android.androidacademy.util.ResProvider
@@ -40,13 +41,14 @@ class FragmentMoviesList :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-requireContext()
+        requireContext()
         val rvMovie = view.findViewById<RecyclerView>(R.id.rv_movie)
 
         viewModel.loadFromDb()
 
         viewModel.movieListLiveData.observe(this.viewLifecycleOwner, Observer {
-            movieAdapter.update(it)
+            movieAdapter.update(viewModel.observableMovies.value?.map { movieEntity -> movieEntity.toMovie() }
+                ?: it)
         })
 
         rvMovie.adapter = movieAdapter

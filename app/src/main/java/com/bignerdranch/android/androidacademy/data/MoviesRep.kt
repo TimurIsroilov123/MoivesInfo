@@ -1,5 +1,6 @@
 package com.bignerdranch.android.androidacademy.data
 
+import androidx.lifecycle.Observer
 import com.bignerdranch.android.androidacademy.AndroidAcademy.Companion.moviesDb
 import com.bignerdranch.android.androidacademy.room.ActorEntity
 import com.bignerdranch.android.androidacademy.room.MovieEntity
@@ -47,7 +48,7 @@ object MoviesRep {
     }
 
 
-    private fun MovieEntity.toMovie() = Movie(
+    fun MovieEntity.toMovie() = Movie(
         id = this.id,
         adult = this.adult,
         backdropPath = this.backdropPath,

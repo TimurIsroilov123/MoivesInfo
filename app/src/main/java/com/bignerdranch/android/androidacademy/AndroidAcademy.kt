@@ -20,7 +20,6 @@ class AndroidAcademy : Application() {
     }
 
     companion object {
-//        val moviesRep = MoviesRep()
 
         lateinit var moviesDb: MovieDataBase
     }

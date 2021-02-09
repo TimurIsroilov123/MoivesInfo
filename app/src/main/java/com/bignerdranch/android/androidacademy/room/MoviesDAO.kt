@@ -1,9 +1,11 @@
 package com.bignerdranch.android.androidacademy.room
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.bignerdranch.android.androidacademy.data.Movie
 
 @Dao
 interface MoviesDAO {
@@ -19,4 +21,8 @@ interface MoviesDAO {
 
     @Query("Delete From movies")
     suspend fun deleteAll()
+
+    @Query("Select * from movies")
+    fun getMoviesObservable(): LiveData<List<MovieEntity>>
 }
+
