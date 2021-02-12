@@ -46,10 +46,9 @@ class FragmentMoviesList :
 
         viewModel.loadFromDb()
 
-        viewModel.movieListLiveData.observe(this.viewLifecycleOwner, Observer {
-            movieAdapter.update(viewModel.observableMovies.value?.map { movieEntity -> movieEntity.toMovie() }
-                ?: it)
-        })
+        viewModel.movieListLiveData.observe(this.viewLifecycleOwner) {
+            movieAdapter.update(viewModel.observableMovies.value?.map { movieEntity -> movieEntity.toMovie() } ?:it)
+        }
 
         rvMovie.adapter = movieAdapter
     }

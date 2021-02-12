@@ -18,5 +18,4 @@ class MovieWorker(context: Context, params: WorkerParameters) :
             Result.failure()
         }
     }
-
 }

@@ -30,7 +30,6 @@ class MovieListViewModel(
             val loadedMovies = resProvider.getLoadedMovies()
             _movieListLiveData.postValue(loadedMovies)
             MoviesRep.deleteAllMoviesAndSetNew(loadedMovies)
-
         }
     }
 }
