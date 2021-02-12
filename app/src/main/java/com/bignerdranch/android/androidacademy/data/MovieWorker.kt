@@ -7,7 +7,6 @@ import androidx.work.WorkerParameters
 
 class MovieWorker(context: Context, params: WorkerParameters) :
     CoroutineWorker(context, params) {
-
     override suspend fun doWork(): Result {
         return try {
             val loadedMovies:List<Movie> = MoviesRep.loadMovies().results
