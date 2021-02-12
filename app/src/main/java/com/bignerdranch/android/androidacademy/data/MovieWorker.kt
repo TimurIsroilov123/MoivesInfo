@@ -9,17 +9,14 @@ class MovieWorker(context: Context, params: WorkerParameters) :
     CoroutineWorker(context, params) {
 
     override suspend fun doWork(): Result {
-        try {
+        return try {
             val loadedMovies:List<Movie> = MoviesRep.loadMovies().results
-
-                loadedMovies.let {  MoviesRep.deleteAllMoviesAndSetNew(loadedMovies) }
-                return Result.success()
-
+            loadedMovies.let {  MoviesRep.deleteAllMoviesAndSetNew(loadedMovies) }
+            Result.success()
         } catch (e: Exception) {
             e.printStackTrace()
-            return Result.failure()
+            Result.failure()
         }
-        return Result.failure()
     }
 
 }

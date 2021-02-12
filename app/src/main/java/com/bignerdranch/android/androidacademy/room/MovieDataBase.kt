@@ -19,6 +19,5 @@ abstract class MovieDataBase : RoomDatabase() {
             MovieDataBase::class.java,
             "movies.db"
         ).fallbackToDestructiveMigration().build()
-
     }
 }
