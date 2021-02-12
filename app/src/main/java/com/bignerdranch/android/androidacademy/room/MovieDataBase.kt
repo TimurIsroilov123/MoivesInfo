@@ -20,6 +20,5 @@ abstract class MovieDataBase : RoomDatabase() {
             "movies.db"
         ).fallbackToDestructiveMigration().build()
 
-
     }
 }

@@ -9,7 +9,7 @@ import com.bignerdranch.android.androidacademy.data.WorkRepository
 import com.bignerdranch.android.androidacademy.room.MovieDataBase
 
 class AndroidAcademy : Application() {
-    private val workRepository = WorkRepository()
+    private val workRepository : WorkRepository by lazy { WorkRepository() }
 
     override fun onCreate() {
         super.onCreate()

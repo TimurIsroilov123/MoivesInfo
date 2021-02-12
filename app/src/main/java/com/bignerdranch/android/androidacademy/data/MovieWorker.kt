@@ -9,16 +9,17 @@ class MovieWorker(context: Context, params: WorkerParameters) :
     CoroutineWorker(context, params) {
 
     override suspend fun doWork(): Result {
-        for (attempt in 0..10) {
-            Thread.sleep(1000)
-            if (ConnectionChecker.isOnline()) {
-                val loadedMovies = MoviesRep.loadMovies().results
-                if (loadedMovies.isNotEmpty()) {
-                    MoviesRep.deleteAllMoviesAndSetNew(loadedMovies)
-                    return Result.success()
-                }
-            }
+        try {
+            val loadedMovies:List<Movie> = MoviesRep.loadMovies().results
+
+                loadedMovies.let {  MoviesRep.deleteAllMoviesAndSetNew(loadedMovies) }
+                return Result.success()
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return Result.failure()
         }
         return Result.failure()
     }
+
 }
