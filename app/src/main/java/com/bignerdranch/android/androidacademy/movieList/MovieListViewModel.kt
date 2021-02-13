@@ -26,7 +26,6 @@ class MovieListViewModel(
             if (dbMovies.isNotEmpty()) {
                 _movieListLiveData.postValue(dbMovies)
             }
-
             val loadedMovies = resProvider.getLoadedMovies()
             _movieListLiveData.postValue(loadedMovies)
             MoviesRep.deleteAllMoviesAndSetNew(loadedMovies)

@@ -58,9 +58,9 @@ class FragmentMoviesDetails() :
             tv_age.text = if (adult) "18+" else "12+"
         }
         viewModel.loadActors(movie!!.id)
-        viewModel.actorsLiveData.observe(this.viewLifecycleOwner, Observer {
+        viewModel.actorsLiveData.observe(this.viewLifecycleOwner) {
             actorAdapter.updateActors(it)
-        })
+        }
 
         rv_actor.adapter = actorAdapter
     }

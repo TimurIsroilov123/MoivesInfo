@@ -26,8 +26,12 @@ class MovieAdapter(
     }
 
     fun update(movies: List<Movie>) {
+        val numberOfRemovedItems = contentData.size
+        contentData.clear()
+        val positionStart = contentData.size
         contentData.addAll(movies)
-        notifyItemRangeInserted(0, movies.size)
+        notifyItemRangeRemoved(0, numberOfRemovedItems)
+        notifyItemRangeInserted(positionStart, positionStart + movies.size)
     }
 
     override fun getItemCount(): Int = contentData.size
