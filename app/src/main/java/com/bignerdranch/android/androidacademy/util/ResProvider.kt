@@ -17,4 +17,5 @@ class ResProvider: IResProvider {
     override suspend fun getLoadedActors(id: Long): List<Cast> {
         return MoviesRep.loadActors(id).cast
     }
+
 }
