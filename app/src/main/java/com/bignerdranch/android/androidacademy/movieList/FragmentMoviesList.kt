@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.android.androidacademy.data.Movie
 import com.bignerdranch.android.androidacademy.data.MoviesRep.toMovie
@@ -20,7 +19,6 @@ class FragmentMoviesList :
     private var listener: OnMovieItemClickListener? = null
     private val movieAdapter: MovieAdapter by lazy { MovieAdapter(this) }
 
-
     private val viewModel by viewModels<MovieListViewModel> {
         MovieListViewModelFactory(ResProvider())
     }
@@ -28,10 +26,11 @@ class FragmentMoviesList :
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
+        viewModel.loadNewMovies()
+
 
         if (context is OnMovieItemClickListener)
             listener = context
-
     }
 
     override fun onDetach() {
@@ -44,10 +43,8 @@ class FragmentMoviesList :
         requireContext()
         val rvMovie = view.findViewById<RecyclerView>(R.id.rv_movie)
 
-        viewModel.loadFromDb()
-
-        viewModel.movieListLiveData.observe(this.viewLifecycleOwner) {
-            movieAdapter.update(viewModel.observableMovies.value?.map { movieEntity -> movieEntity.toMovie() } ?:it)
+        viewModel.observableMovies.observe(this.viewLifecycleOwner) {
+            movieAdapter.update(it.map {movie -> movie.toMovie() })
         }
 
         rvMovie.adapter = movieAdapter
@@ -56,6 +53,5 @@ class FragmentMoviesList :
     override fun onItemClick(movie: Movie) {
         listener?.onItemClickShowDetail(movie)
     }
-
 }
 

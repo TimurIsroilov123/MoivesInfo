@@ -80,4 +80,6 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
     //workManager
     implementation "androidx.work:work-runtime-ktx:2.4.0"
+    // Android Debug Database
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 }

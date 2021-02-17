@@ -1,12 +1,8 @@
 package com.bignerdranch.android.androidacademy.data
 
 import kotlinx.serialization.*
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
-import kotlinx.serialization.json.*
-import kotlinx.serialization.internal.*
+
+
 
 @Serializable
 data class Credit(
@@ -22,7 +18,7 @@ data class Cast(
     val name: String,
 
     @SerialName("original_name")
-    val originalName: String = "unknown",
+    val originalName: String,
 
     val popularity: Double = 0.0,
 

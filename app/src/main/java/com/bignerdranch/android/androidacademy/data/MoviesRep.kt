@@ -1,5 +1,6 @@
 package com.bignerdranch.android.androidacademy.data
 
+import androidx.lifecycle.LiveData
 import com.bignerdranch.android.androidacademy.AndroidAcademy.Companion.moviesDb
 import com.bignerdranch.android.androidacademy.room.ActorEntity
 import com.bignerdranch.android.androidacademy.room.MovieEntity
@@ -23,21 +24,30 @@ object MoviesRep {
         return RetrofitModule().moviesApi.getActors(id)
     }
 
-    suspend fun getAllMovies(): List<Movie> = withContext(Dispatchers.IO) {
-        moviesDb.movieDao.getAll().map { it.toMovie() }
+    suspend fun getAllMovies() = withContext(Dispatchers.IO) {
+        moviesDb.movieDao.getAll()
     }
 
-    suspend fun deleteAllMoviesAndSetNew(movies: List<Movie>) =
+    suspend fun deleteAllMovies() = withContext(Dispatchers.IO) {
+        moviesDb.movieDao.deleteAll()
+    }
+
+    suspend fun getMoviesObservableSuspend(): LiveData<List<MovieEntity>> =
         withContext(Dispatchers.IO) {
-            moviesDb.movieDao.deleteAll()
+            moviesDb.movieDao.getMoviesObservable()
+        }
+
+    suspend fun setNewMovies(movies: List<Movie>) =
+        withContext(Dispatchers.IO) {
             for (movie in movies) {
                 moviesDb.movieDao.insert(
-                    movie.toMovieEntity())
+                    movie.toMovieEntity()
+                )
             }
         }
 
-    suspend fun getAllActors(): List<Cast> = withContext(Dispatchers.IO) {
-        moviesDb.actorsDAO.getAll().map { it.toCast() }
+    suspend fun getActorsByMovieTitle(movieTitle: String): List<Cast> = withContext(Dispatchers.IO) {
+        moviesDb.actorsDAO.getAllByTitle(movieTitle).map { it.toCast() }
     }
 
     suspend fun deleteAllActorsAndSetNew(casts: List<Cast>) = withContext(Dispatchers.IO) {
@@ -67,31 +77,33 @@ object MoviesRep {
         )
     )
 
-     private fun Movie.toMovieEntity() = MovieEntity(
-            posterPath = this.posterPath!!,
-            adult = this.adult,
-            overview = this.overview,
-            genres = this.detail!!.genres.joinToString { it.name },
-            id = this.id,
-            title = this.title,
-            backdropPath = this.backdropPath,
-            popularity = this.popularity,
-            voteCount = this.voteCount,
-            voteAverage = this.voteAverage,
-            runtime = this.detail!!.runtime,
+    private fun Movie.toMovieEntity() = MovieEntity(
+        posterPath = this.posterPath!!,
+        adult = this.adult,
+        overview = this.overview,
+        genres = this.detail!!.genres.joinToString { it.name },
+        id = this.id,
+        title = this.title,
+        backdropPath = this.backdropPath,
+        popularity = this.popularity,
+        voteCount = this.voteCount,
+        voteAverage = this.voteAverage,
+        runtime = this.detail!!.runtime,
 
-    )
+        )
 
     private fun Cast.toActorEntity() = ActorEntity(
         id = this.id,
         name = this.name,
-        profilePath = this.profilePath ?: ""
+        profilePath = this.profilePath ?: "",
+        movieTitle = this.originalName
     )
 
     private fun ActorEntity.toCast() = Cast(
         id = this.id,
         name = this.name,
-        profilePath = this.profilePath
+        profilePath = this.profilePath,
+        originalName = this.movieTitle
     )
 
 }

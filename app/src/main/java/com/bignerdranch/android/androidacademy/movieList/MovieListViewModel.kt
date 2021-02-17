@@ -2,33 +2,68 @@ package com.bignerdranch.android.androidacademy.movieList
 
 import androidx.lifecycle.*
 import com.bignerdranch.android.androidacademy.AndroidAcademy.Companion.moviesDb
+import com.bignerdranch.android.androidacademy.data.ConnectionChecker
 import com.bignerdranch.android.androidacademy.data.Movie
 import com.bignerdranch.android.androidacademy.data.MoviesRep
+import com.bignerdranch.android.androidacademy.data.MoviesRep.toMovie
 import com.bignerdranch.android.androidacademy.room.MovieEntity
 import com.bignerdranch.android.androidacademy.util.IResProvider
+import com.bignerdranch.android.androidacademy.util.ResProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MovieListViewModel(
-    private val resProvider: IResProvider
+    private val resProvider: ResProvider
 ) : ViewModel() {
 
-    var observableMovies: LiveData<List<MovieEntity>> =
+    val observableMovies: LiveData<List<MovieEntity>> =
         moviesDb.movieDao.getMoviesObservable()
 
-    private val _movieListLiveData = MutableLiveData<List<Movie>>()
-    val movieListLiveData: LiveData<List<Movie>>
-        get() = _movieListLiveData
 
-    fun loadFromDb() {
+
+    fun loadNewMovies() {
         viewModelScope.launch(Dispatchers.IO) {
-            val dbMovies = MoviesRep.getAllMovies()
-            if (dbMovies.isNotEmpty()) {
-                _movieListLiveData.postValue(dbMovies)
+            if(ConnectionChecker.isOnline()) {
+                val loadedMovies = resProvider.getLoadedMovies()
+                MoviesRep.deleteAllMovies()
+                MoviesRep.setNewMovies(loadedMovies)
             }
-            val loadedMovies = resProvider.getLoadedMovies()
-            _movieListLiveData.postValue(loadedMovies)
-            MoviesRep.deleteAllMoviesAndSetNew(loadedMovies)
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//    fun loadNewMovies() {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            val dbMovies = MoviesRep.getAllMovies()
+//            val mappedMovies = mutableListOf<Movie>()
+//            if (dbMovies.isNotEmpty()) {
+//                dbMovies.forEach {
+//                    mappedMovies.add(it.toMovie())
+//                }
+//                _movieListLiveData.postValue(mappedMovies)
+//            }
+//            val loadedMovies = resProvider.getLoadedMovies()
+//            _movieListLiveData.postValue(loadedMovies)
+//        }
+//    }
+
+//    fun updateDb() {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            MoviesRep.deleteAllMovies()
+//            MoviesRep.setNewMovies(movieListLiveData.value ?: listOf<Movie>())
+//        }
+//    }
