@@ -12,6 +12,7 @@ import retrofit2.http.Query
 
 object MoviesRep {
 
+
     suspend fun loadMovies(): Page {
         return RetrofitModule().moviesApi.getMovies()
     }
@@ -45,12 +46,14 @@ object MoviesRep {
 
 
     suspend fun deleteAllActorsAndSetNew(casts: List<Cast>) {
+
         moviesDb.actorsDAO.deleteAll()
         for (actor in casts)
             moviesDb.actorsDAO.insert(actor.toActorEntity())
     }
 
     fun MovieEntity.toMovie() = Movie(
+
         id = this.id,
         adult = this.adult,
         backdropPath = this.backdropPath,
@@ -83,8 +86,8 @@ object MoviesRep {
         voteCount = this.voteCount,
         voteAverage = this.voteAverage,
         runtime = this.detail!!.runtime,
-
         )
+
 
     private fun Cast.toActorEntity() = ActorEntity(
         id = this.id,
