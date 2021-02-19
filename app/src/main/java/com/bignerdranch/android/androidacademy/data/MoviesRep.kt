@@ -24,33 +24,27 @@ object MoviesRep {
         return RetrofitModule().moviesApi.getActors(id)
     }
 
-    suspend fun getAllMovies() = withContext(Dispatchers.IO) {
+    suspend fun getAllMovies() {
         moviesDb.movieDao.getAll()
     }
 
-    suspend fun deleteAllMovies() = withContext(Dispatchers.IO) {
+    suspend fun deleteAllMovies() {
         moviesDb.movieDao.deleteAll()
     }
 
-    suspend fun getMoviesObservableSuspend(): LiveData<List<MovieEntity>> =
-        withContext(Dispatchers.IO) {
-            moviesDb.movieDao.getMoviesObservable()
+    suspend fun setNewMovies(movies: List<Movie>) {
+        for (movie in movies) {
+            moviesDb.movieDao.insert(
+                movie.toMovieEntity()
+            )
         }
-
-    suspend fun setNewMovies(movies: List<Movie>) =
-        withContext(Dispatchers.IO) {
-            for (movie in movies) {
-                moviesDb.movieDao.insert(
-                    movie.toMovieEntity()
-                )
-            }
-        }
-
-    suspend fun getActorsByMovieTitle(movieTitle: String): List<Cast> = withContext(Dispatchers.IO) {
-        moviesDb.actorsDAO.getAllByTitle(movieTitle).map { it.toCast() }
     }
 
-    suspend fun deleteAllActorsAndSetNew(casts: List<Cast>) = withContext(Dispatchers.IO) {
+    suspend fun getActorsByMovieTitle(movieTitle: String): List<Cast> =
+        moviesDb.actorsDAO.getAllByTitle(movieTitle).map { it.toCast() }
+
+
+    suspend fun deleteAllActorsAndSetNew(casts: List<Cast>) {
         moviesDb.actorsDAO.deleteAll()
         for (actor in casts)
             moviesDb.actorsDAO.insert(actor.toActorEntity())
