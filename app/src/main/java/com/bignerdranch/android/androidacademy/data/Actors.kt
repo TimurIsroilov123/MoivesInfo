@@ -18,4 +18,5 @@ data class Cast(
 
     @SerialName("profile_path")
     val profilePath: String? = null
+
 )
