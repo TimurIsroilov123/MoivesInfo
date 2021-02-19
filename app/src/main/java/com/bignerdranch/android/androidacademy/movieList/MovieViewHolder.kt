@@ -40,7 +40,6 @@ class MovieViewHolder(
         }
     }
 
-    @SuppressLint("SetTextI18n")
     fun onBind(movie: Movie) {
         this.movie = movie
         movie.apply {
@@ -59,6 +58,5 @@ class MovieViewHolder(
         }
     }
 }
-
 
 const val BASE_IMG_URL = "https://image.tmdb.org/t/p/w500/"

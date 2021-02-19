@@ -13,7 +13,6 @@ data class MovieDetails (
     @SerialName("backdrop_path")
     val backdropPath: String? = null,
 
-
     val budget: Long = 1_000_000,
     val genres: List<Genre>,
     val homepage: String = "unknown",

@@ -1,19 +1,25 @@
 package com.bignerdranch.android.androidacademy
 
 import android.app.Application
-import com.bignerdranch.android.androidacademy.data.MoviesRep
+import androidx.work.WorkManager
+import com.bignerdranch.android.androidacademy.data.WorkRepository
+//import com.bignerdranch.android.androidacademy.data.WorkRepository
 import com.bignerdranch.android.androidacademy.room.MovieDataBase
 
-class AndroidAcademy: Application() {
+class AndroidAcademy : Application() {
+    private val workRepository : WorkRepository by lazy { WorkRepository() }
 
     override fun onCreate() {
         super.onCreate()
+
+        WorkManager.getInstance(this).enqueue(workRepository.request)
+
         moviesDb = MovieDataBase.create(this)
     }
 
     companion object {
-        val moviesRep = MoviesRep()
 
-        lateinit var moviesDb: MovieDataBase //= MovieDataBase.create()
+        lateinit var moviesDb: MovieDataBase
     }
+
 }

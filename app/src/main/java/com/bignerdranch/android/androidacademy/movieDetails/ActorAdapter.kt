@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.android.androidacademy.data.Cast
 
-class ActorAdapter() :
+class ActorAdapter :
     RecyclerView.Adapter<ActorViewHolder>() {
 
     private val contentData = mutableListOf<Cast>()

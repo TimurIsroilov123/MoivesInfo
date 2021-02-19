@@ -1,6 +1,6 @@
 package com.bignerdranch.android.androidacademy.data
 
-import android.content.Context
+import androidx.lifecycle.LiveData
 import com.bignerdranch.android.androidacademy.AndroidAcademy.Companion.moviesDb
 import com.bignerdranch.android.androidacademy.room.ActorEntity
 import com.bignerdranch.android.androidacademy.room.MovieEntity
@@ -10,7 +10,8 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-class MoviesRep {
+object MoviesRep {
+
 
     suspend fun loadMovies(): Page {
         return RetrofitModule().moviesApi.getMovies()
@@ -24,30 +25,35 @@ class MoviesRep {
         return RetrofitModule().moviesApi.getActors(id)
     }
 
-    suspend fun getAllMovies(): List<Movie> = withContext(Dispatchers.IO) {
-        moviesDb.movieDao.getAll().map { it.toMovie() }
+    suspend fun getAllMovies() {
+        moviesDb.movieDao.getAll()
     }
 
-    suspend fun deleteAllMoviesAndSetNew(movies: List<Movie>) =
-        withContext(Dispatchers.IO) {
-            moviesDb.movieDao.deleteAll()
-            for (movie in movies) {
-                moviesDb.movieDao.insert(movie.toMovieEntity())
-            }
+    suspend fun deleteAllMovies() {
+        moviesDb.movieDao.deleteAll()
+    }
+
+    suspend fun setNewMovies(movies: List<Movie>) {
+        for (movie in movies) {
+            moviesDb.movieDao.insert(
+                movie.toMovieEntity()
+            )
         }
-
-    suspend fun getAllActors(): List<Cast> = withContext(Dispatchers.IO) {
-        moviesDb.actorsDAO.getAll().map { it.toCast() }
     }
 
-    suspend fun deleteAllActorsAndSetNew(casts: List<Cast>) = withContext(Dispatchers.IO) {
+    suspend fun getActorsByMovieTitle(movieTitle: String): List<Cast> =
+        moviesDb.actorsDAO.getAllByTitle(movieTitle).map { it.toCast() }
+
+
+    suspend fun deleteAllActorsAndSetNew(casts: List<Cast>) {
+
         moviesDb.actorsDAO.deleteAll()
         for (actor in casts)
             moviesDb.actorsDAO.insert(actor.toActorEntity())
     }
 
+    fun MovieEntity.toMovie() = Movie(
 
-    private fun MovieEntity.toMovie() = Movie(
         id = this.id,
         adult = this.adult,
         backdropPath = this.backdropPath,
@@ -80,18 +86,21 @@ class MoviesRep {
         voteCount = this.voteCount,
         voteAverage = this.voteAverage,
         runtime = this.detail!!.runtime,
-    )
+        )
+
 
     private fun Cast.toActorEntity() = ActorEntity(
         id = this.id,
         name = this.name,
-        profilePath = this.profilePath ?: ""
+        profilePath = this.profilePath ?: "",
+        movieTitle = this.originalName
     )
 
     private fun ActorEntity.toCast() = Cast(
         id = this.id,
         name = this.name,
-        profilePath = this.profilePath
+        profilePath = this.profilePath,
+        originalName = this.movieTitle
     )
 
 }

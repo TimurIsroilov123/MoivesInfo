@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(
-    entities = [MovieEntity::class, ActorEntity::class], version = 1
+    entities = [MovieEntity::class, ActorEntity::class], version = 4
 )
 abstract class MovieDataBase : RoomDatabase() {
 
@@ -19,7 +19,5 @@ abstract class MovieDataBase : RoomDatabase() {
             MovieDataBase::class.java,
             "movies.db"
         ).fallbackToDestructiveMigration().build()
-
-
     }
 }

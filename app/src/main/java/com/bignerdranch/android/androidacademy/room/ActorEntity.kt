@@ -18,5 +18,8 @@ class ActorEntity(
     val name: String,
 
     @ColumnInfo(name = "profilePath")
-    val profilePath: String
+    val profilePath: String,
+
+    @ColumnInfo(name = "movie_title")
+    val movieTitle: String
 )

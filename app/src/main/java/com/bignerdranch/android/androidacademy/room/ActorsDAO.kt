@@ -8,9 +8,8 @@ import com.bignerdranch.android.androidacademy.data.Cast
 
 @Dao
 interface ActorsDAO {
-
-    @Query("Select * From actors")
-    suspend fun getAll(): List<ActorEntity>
+    @Query("Select * From actors Where movie_title = :movieTitle")
+    suspend fun getAllByTitle(movieTitle: String): List<ActorEntity>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(actorEntity: ActorEntity)
