@@ -1,4 +1,4 @@
-# MoivesInfo
+# MoviesInfo
 **Used themoviedb API to get the most popular movies**
 
 Consist of two screens: 
